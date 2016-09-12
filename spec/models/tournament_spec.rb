@@ -6,4 +6,8 @@ describe Tournament do
 
   it { should respond_to(:name) }
 
+  it { should have_many(:players) }
+
+  it { should have_many(:players).through(:players_tournaments) }
+
 end

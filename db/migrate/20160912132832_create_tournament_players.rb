@@ -1,0 +1,8 @@
+class CreateTournamentPlayers < ActiveRecord::Migration[5.0]
+  def change
+    create_table :tournament_players do |t|
+
+      t.timestamps
+    end
+  end
+end

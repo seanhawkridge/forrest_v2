@@ -1,1 +1,14 @@
 <%= @tournament.name %>
+
+<ul class="players_list">
+  <% @tournament.players.map do |player| %>
+    <li><%= player.name %></li>
+  <% end %>
+</ul>
+
+<%= form_for @tournament do |f| %>
+  <p>
+    <%= f.collection_select(:players, Player.all.order(:name), :id, :name) %>
+    <%= f.submit "Add to tournament" %>
+  </p>
+<% end %>

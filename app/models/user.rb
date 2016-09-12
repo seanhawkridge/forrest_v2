@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  after_create :create_player
+
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth['provider']
@@ -10,6 +12,10 @@ class User < ActiveRecord::Base
          user.image = auth['info']['image'] || ""
       end
     end
+  end
+
+  def create_player
+    @player = Player.create(name: self.name, user: self)
   end
 
 end
