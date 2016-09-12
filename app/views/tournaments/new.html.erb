@@ -1,0 +1,10 @@
+<h1>Create a new tournament</h1>
+<%= form_for :tournament, url: tournaments_path do |f| %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.submit "Create Tournament" %>
+  </p>
+<% end %>
