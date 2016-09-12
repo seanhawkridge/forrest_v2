@@ -33,6 +33,7 @@ group :development, :test do
   gem 'faker'
   gem 'rspec-rails'
   gem 'dotenv-rails'
+  gem 'shoulda-matchers'
 end
 group :production do
   gem 'rails_12factor'
