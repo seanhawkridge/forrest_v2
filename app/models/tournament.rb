@@ -9,8 +9,6 @@ class Tournament < ApplicationRecord
     create_remaining_rounds
   end
 
-  private
-
   def create_first_round
     pairings = create_pairings(players)
     first_round = rounds.create
@@ -32,6 +30,21 @@ class Tournament < ApplicationRecord
       end
       rounds << next_round
     end
+  end
+
+  def process_results(round_id)
+    current_round = rounds.find(round_id)
+    update_next_round(current_round)
+  end
+
+  def update_next_round(round)
+    pairings = create_pairings(round.collect_winners)
+    next_round = rounds.find(round.id+1)
+    next_round.matches.each.with_index do |match, i|
+      match.update_attributes(player_one: pairings[i][0], player_two: pairings[i][1])
+      match.save
+    end
+    next_round.save
   end
 
   def create_pairings(collection)

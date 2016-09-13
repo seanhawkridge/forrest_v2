@@ -7,4 +7,8 @@ class Round < ApplicationRecord
     matches << matches.create(player_one: player_one, player_two: player_two)
   end
 
+  def collect_winners
+    matches.map { |match| match.winner }
+  end
+
 end

@@ -29,6 +29,19 @@ describe Tournament do
       expect(@tournament.rounds.first.matches.size).to eq 2
       expect(@tournament.rounds.last.matches.size).to eq 1
     end
+
+  end
+
+  describe '#process_results' do
+
+    xit 'adds the winning player for a round to a match in the next round' do
+      players = FactoryGirl.create_list(:player, 4)
+      @tournament.players << players
+      @tournament.build_tournament
+      expect(@tournament.rounds[1].matches[0]).to receive(:update_attributes)
+      @tournament.process_results(@tournament.rounds[0].id)
+    end
+
   end
 
 end
