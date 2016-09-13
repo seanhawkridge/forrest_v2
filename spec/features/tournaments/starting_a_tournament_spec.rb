@@ -1,8 +1,8 @@
 feature 'Starting a tournament' do
 
-  scenario 'with a full round of players' do
+  scenario 'with a first round of players' do
     create_tournament
-    add_players
+    add_four_players
     click_button 'Generate Matches'
     expect(page).to have_no_css('#tournament_players')
     expect(page).to have_no_css('#generate_matches')
@@ -13,6 +13,16 @@ feature 'Starting a tournament' do
     expect(page).to have_content('Match 2')
     expect(page).to have_content('p1: Brad')
     expect(page).to have_content('p2: Chris')
+  end
+
+  scenario 'with a prepared second round' do
+    create_tournament
+    add_four_players
+    click_button 'Generate Matches'
+    expect(page).to have_content('Round 2')
+    expect(page).to have_content('Match 1')
+    expect(page).to have_content('p1: player')
+    expect(page).to have_content('p2: player')
   end
 
 end

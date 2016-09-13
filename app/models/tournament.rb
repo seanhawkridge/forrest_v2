@@ -6,6 +6,7 @@ class Tournament < ApplicationRecord
 
   def build_tournament
     create_first_round
+    create_remaining_rounds
   end
 
   private
@@ -18,6 +19,19 @@ class Tournament < ApplicationRecord
     end
     first_round.save
     rounds << first_round
+  end
+
+  def create_remaining_rounds
+    count = rounds.first.matches.size
+    while count >= 2
+      count /= 2
+      next_round = rounds.create
+      count.times do
+        match = next_round.matches.create
+        next_round.matches << match
+      end
+      rounds << next_round
+    end
   end
 
   def create_pairings(collection)

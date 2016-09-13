@@ -7,7 +7,7 @@ module NewTournament
     click_button 'Create Tournament'
   end
 
-  def add_players
+  def add_four_players
     FactoryGirl.create(:player, name: 'Sean')
     FactoryGirl.create(:player, name: 'Sina')
     FactoryGirl.create(:player, name: 'Brad')

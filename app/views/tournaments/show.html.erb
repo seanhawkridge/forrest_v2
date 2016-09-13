@@ -21,8 +21,8 @@
     <h1><%= "Round #{i+1}" %></h1>
     <% round.matches.each.with_index do |match, i| %>
       <h2><%= "Match #{i+1}" %></h2>
-      <h3>p1: <%= match.player_one.name %></h3>
-      <h3>p2: <%= match.player_two.name %></h3>
+      <h3>p1: <%= match.player_one ? match.player_one.name : 'player' %></h3>
+      <h3>p2: <%= match.player_two ? match.player_two.name : 'player' %></h3>
     <% end %>
   <% end %>
 
