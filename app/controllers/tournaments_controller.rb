@@ -18,6 +18,12 @@ class TournamentsController < ApplicationController
     redirect_to @tournament
   end
 
+  def build_tournament
+    @tournament = Tournament.find(params[:id])
+    @tournament.build_tournament
+    redirect_to @tournament
+  end
+
   private
 
   def tournament_params

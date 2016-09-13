@@ -1,14 +1,29 @@
 <%= @tournament.name %>
 
-<ul class="players_list">
-  <% @tournament.players.map do |player| %>
-    <li><%= player.name %></li>
-  <% end %>
-</ul>
+<% if @tournament.rounds.empty? %>
 
-<%= form_for @tournament do |f| %>
-  <p>
-    <%= f.collection_select(:players, Player.all.order(:name), :id, :name) %>
-    <%= f.submit "Add to tournament" %>
-  </p>
+  <ul class="players_list">
+    <% @tournament.players.map do |player| %>
+      <li><%= player.name %></li>
+    <% end %>
+  </ul>
+
+  <%= form_for @tournament, html: {id: "tournament_players"} do |f| %>
+      <%= f.collection_select(:players, Player.all.order(:name), :id, :name) %>
+      <%= f.submit "Add to tournament" %>
+  <% end %>
+
+  <%= button_to "Generate Matches", {action: :build_tournament}, {id: "generate_matches"} %>
+
+<% else %>
+
+  <% @tournament.rounds.each.with_index do |round, i| %>
+    <h1><%= "Round #{i+1}" %></h1>
+    <% round.matches.each.with_index do |match, i| %>
+      <h2><%= "Match #{i+1}" %></h2>
+      <h3>p1: <%= match.player_one.name %></h3>
+      <h3>p2: <%= match.player_two.name %></h3>
+    <% end %>
+  <% end %>
+
 <% end %>

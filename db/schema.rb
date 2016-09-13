@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912133455) do
+ActiveRecord::Schema.define(version: 20160912160301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "matches", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "round_id"
+    t.integer  "player_one_id"
+    t.integer  "player_two_id"
+    t.index ["round_id"], name: "index_matches_on_round_id", using: :btree
+  end
 
   create_table "players", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -28,6 +37,13 @@ ActiveRecord::Schema.define(version: 20160912133455) do
     t.integer "player_id",     null: false
     t.index ["player_id", "tournament_id"], name: "index_players_tournaments_on_player_id_and_tournament_id", using: :btree
     t.index ["tournament_id", "player_id"], name: "index_players_tournaments_on_tournament_id_and_player_id", using: :btree
+  end
+
+  create_table "rounds", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "tournament_id"
+    t.index ["tournament_id"], name: "index_rounds_on_tournament_id", using: :btree
   end
 
   create_table "tournaments", force: :cascade do |t|
@@ -46,4 +62,6 @@ ActiveRecord::Schema.define(version: 20160912133455) do
     t.string   "image"
   end
 
+  add_foreign_key "matches", "rounds"
+  add_foreign_key "rounds", "tournaments"
 end
