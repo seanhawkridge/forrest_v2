@@ -32,4 +32,20 @@ describe Round do
 
   end
 
+  describe '#is_final?' do
+
+    it 'returns true if the match is the final' do
+      match = FactoryGirl.create(:match)
+      @round.matches << match
+      expect(@round.is_final?).to be true
+    end
+
+    it 'returns false if the match is not the final' do
+      matches = FactoryGirl.create_list(:match, 2)
+      @round.matches << matches
+      expect(@round.is_final?).to be false
+    end
+
+  end
+
 end

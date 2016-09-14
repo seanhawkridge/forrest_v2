@@ -11,4 +11,12 @@ class Round < ApplicationRecord
     matches.map { |match| match.winner }
   end
 
+  def is_final?
+    matches.size == 1
+  end
+
+  def final_winner
+    is_final? ? matches.first.winner : nil
+  end
+
 end

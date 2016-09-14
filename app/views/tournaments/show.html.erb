@@ -40,4 +40,8 @@
     </div>
   <% end %>
 
+  <% if @tournament.champion %>
+    Champion: <%= @tournament.champion.name %>
+  <% end %>
+
 <% end %>

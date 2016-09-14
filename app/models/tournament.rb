@@ -3,6 +3,7 @@ class Tournament < ApplicationRecord
   has_many :players_tournaments
   has_many :players, through: :players_tournaments
   has_many :rounds
+  belongs_to :champion, class_name: 'Player', optional: true
 
   def build_tournament
     create_first_round
@@ -32,9 +33,13 @@ class Tournament < ApplicationRecord
     end
   end
 
-  def process_results(round_id)
-    current_round = rounds.find(round_id)
-    update_next_round(current_round)
+  def process_results(round)
+    current_round = rounds.find(round)
+    current_round.is_final? ? set_champion(current_round) : update_next_round(current_round)
+  end
+
+  def set_champion(round)
+    update_attributes(champion: round.final_winner)
   end
 
   def update_next_round(round)

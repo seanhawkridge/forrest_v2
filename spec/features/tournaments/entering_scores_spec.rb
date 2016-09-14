@@ -40,7 +40,8 @@ feature 'Entering scores' do
     submits[1].click
     p1_inputs[2].set "2"
     p2_inputs[2].set "1"
-    expect{ submits[2].click }.to raise_error
+    submits[2].click
+    expect(page).to have_content 'Champion: Sean'
   end
 
 end

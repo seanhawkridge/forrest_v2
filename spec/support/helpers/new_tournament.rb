@@ -16,16 +16,12 @@ module NewTournament
     create_tournament
     select 'Sean', from: 'tournament[players]'
     click_button 'Add to tournament'
-    within('.players_list') { expect(page).to have_content 'Sean' }
     select 'Sina', from: 'tournament[players]'
     click_button 'Add to tournament'
-    within('.players_list') { expect(page).to have_content 'Sina' }
     select 'Brad', from: 'tournament[players]'
     click_button 'Add to tournament'
-    within('.players_list') { expect(page).to have_content 'Brad' }
     select 'Chris', from: 'tournament[players]'
     click_button 'Add to tournament'
-    within('.players_list') { expect(page).to have_content 'Chris' }
   end
 
 end

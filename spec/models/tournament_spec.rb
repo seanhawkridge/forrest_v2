@@ -10,6 +10,9 @@ describe Tournament do
 
   it { should have_many(:players).through(:players_tournaments) }
 
+  it { should belong_to(:champion) }
+
+
   describe '#build_tournament' do
 
     it 'creates a first round' do
@@ -34,12 +37,26 @@ describe Tournament do
 
   describe '#process_results' do
 
-    xit 'adds the winning player for a round to a match in the next round' do
+    it 'adds the winning player for a round to a match in the next round' do
       players = FactoryGirl.create_list(:player, 4)
       @tournament.players << players
       @tournament.build_tournament
-      expect(@tournament.rounds[1].matches[0]).to receive(:update_attributes)
+      expect_any_instance_of(Match).to receive(:update_attributes)
       @tournament.process_results(@tournament.rounds[0].id)
+    end
+
+  end
+
+  describe '#set_champion' do
+
+    xit 'updates the champion for the tournament' do
+      players = FactoryGirl.create_list(:player, 2)
+      @tournament.players << players
+      @tournament.build_tournament
+      @tournament.rounds[0].matches[0].winner = players[0]
+      @tournament.process_results(@tournament.rounds[0].id)
+
+      expect(@tournament.champion).to be_truthy
     end
 
   end
