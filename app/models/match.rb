@@ -7,6 +7,8 @@ class Match < ApplicationRecord
 
   def update_results(p1_score, p2_score)
     results = calculate_results(p1_score, p2_score)
+    results[:winner].update_win_count
+    results.each { |position, player| player.update_stats }
     update_attributes(winner: results[:winner], player_one_score: p1_score, player_two_score: p2_score)
   end
 

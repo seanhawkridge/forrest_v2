@@ -1,0 +1,15 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Games</th>
+    <th>Win Percentage</th>
+  </tr>
+  <% @players.each do |player| %>
+  <tr>
+    <td><%= player.name %></td>
+    <td><%= player.games %></td>
+    <td><%= player.wins %></td>
+    <td><%= number_to_percentage(player.win_percentage, precision: 0) %></td>
+  </tr>
+  <% end %>
+</table>
