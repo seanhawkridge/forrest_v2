@@ -31,9 +31,33 @@ describe Match do
       @match.update_results(3, 1)
     end
 
-    it 'should call the #update_stats method in player' do
+    it 'should call the #update_win_count method in player' do
       expect(@match.player_one).to receive(:update_win_count)
       @match.update_results(3, 1)
+    end
+
+  end
+
+  describe '#player_type' do
+
+    it 'should return the correct player placeholder for a bye' do
+      match = FactoryGirl.create(:match, player_two: nil, bye: true)
+      expect(match.player_placeholder).to eq "bye"
+    end
+
+    it 'should return the correct player placeholder for a player' do
+      match = FactoryGirl.create(:match)
+      expect(match.player_placeholder).to eq "player"
+    end
+
+  end
+
+  describe '#win_by_bye' do
+
+    it 'should update the match winner as player one' do
+      match = FactoryGirl.create(:match, player_two: nil, bye: true)
+      match.win_by_bye
+      expect(match.winner).to eq match.player_one
     end
 
   end

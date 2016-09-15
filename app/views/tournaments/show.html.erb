@@ -22,19 +22,23 @@
       <h1><%= "Round #{i+1}" %></h1>
       <% round.matches.each.with_index do |match, i| %>
         <h2><%= "Match #{i+1}" %></h2>
-        <h3>p1: <%= match.player_one ? match.player_one.name : 'player' %></h3>
-        <h3>p2: <%= match.player_two ? match.player_two.name : 'player' %></h3>
-        <%= form_for match do |f| %>
-          <p>
-            <%= f.label :player_one_score %>
-            <%= f.text_field :player_one_score %>
-            <%= f.label :player_two_score %>
-            <%= f.text_field :player_two_score %>
-            <%= f.hidden_field :tournament_id, value: @tournament.id %>
-          </p>
-          <p>
-            <%= f.submit %>
-          </p>
+        <h3>p1: <%= match.player_one ? match.player_one.name : match.player_placeholder %></h3>
+        <h3>p2: <%= match.player_two ? match.player_two.name : match.player_placeholder %></h3>
+        <% if match.winner %>
+          <h3>Winner: <%= match.winner.name %></h3>
+        <% else %>
+          <%= form_for match do |f| %>
+            <p>
+              <%= f.label :player_one_score %>
+              <%= f.text_field :player_one_score %>
+              <%= f.label :player_two_score %>
+              <%= f.text_field :player_two_score %>
+              <%= f.hidden_field :tournament_id, value: @tournament.id %>
+            </p>
+            <p>
+              <%= f.submit %>
+            </p>
+          <% end %>
         <% end %>
       <% end %>
     </div>

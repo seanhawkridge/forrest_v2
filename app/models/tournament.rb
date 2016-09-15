@@ -8,10 +8,11 @@ class Tournament < ApplicationRecord
   def build_tournament
     create_first_round
     create_remaining_rounds
+    update_byes
   end
 
   def create_first_round
-    pairings = create_pairings(players)
+    pairings = create_pairings(players_and_byes)
     first_round = rounds.create
     first_round_matches = pairings.map do |pairing|
       first_round.create_match(pairing[0], pairing[1])
@@ -25,17 +26,15 @@ class Tournament < ApplicationRecord
     while count >= 2
       count /= 2
       next_round = rounds.create
-      count.times do
-        match = next_round.matches.create
-        next_round.matches << match
-      end
+      count.times { next_round.matches << next_round.matches.create }
+      next_round.save
       rounds << next_round
     end
   end
 
   def process_results(round)
-    current_round = rounds.find(round)
-    current_round.is_final? ? set_champion(current_round) : update_next_round(current_round)
+    round = rounds.find(round)
+    round.is_final? ? set_champion(round) : update_next_round(round)
   end
 
   def set_champion(round)
@@ -55,4 +54,32 @@ class Tournament < ApplicationRecord
   def create_pairings(collection)
     collection.each_slice(2).to_a
   end
+
+  def byes_array
+    byes_array = []
+    byes_count.times { byes_array << :bye }
+    byes_array
+  end
+
+  def byes_count
+    player_count = players.size
+    tournament_size = powers_array.find { |x| x >= player_count }
+    byes_count = tournament_size - player_count
+  end
+
+  def powers_array
+    powers_array = []
+    2.upto(10) { |p| powers_array << 2**(p-1) }
+    powers_array
+  end
+
+  def players_and_byes
+    players.zip(byes_array).flatten.compact
+  end
+
+  def update_byes
+    rounds.first.update_byes
+    update_next_round(rounds.first) unless rounds.first.is_final?
+  end
+
 end

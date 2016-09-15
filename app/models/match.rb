@@ -12,6 +12,14 @@ class Match < ApplicationRecord
     update_attributes(winner: results[:winner], player_one_score: p1_score, player_two_score: p2_score)
   end
 
+  def player_placeholder
+    bye == true ? "bye" : "player"
+  end
+
+  def win_by_bye
+    self.update_attributes(winner: player_one)
+  end
+
   private
 
   def calculate_results(p1_score, p2_score)

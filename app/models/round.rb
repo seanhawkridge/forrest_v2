@@ -4,7 +4,11 @@ class Round < ApplicationRecord
   has_many :matches
 
   def create_match(player_one, player_two)
-    matches << matches.create(player_one: player_one, player_two: player_two)
+    if player_two == :bye
+      matches << matches.create(player_one: player_one, bye: true)
+    else
+      matches << matches.create(player_one: player_one, player_two: player_two)
+    end
   end
 
   def collect_winners
@@ -17,6 +21,10 @@ class Round < ApplicationRecord
 
   def final_winner
     is_final? ? matches.first.winner : nil
+  end
+
+  def update_byes
+    matches.each { |match| match.win_by_bye if match.bye == true }
   end
 
 end

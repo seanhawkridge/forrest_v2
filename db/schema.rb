@@ -10,30 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160914082726) do
+ActiveRecord::Schema.define(version: 20160915085636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "matches", force: :cascade do |t|
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "round_id"
     t.integer  "player_one_id"
     t.integer  "player_two_id"
     t.integer  "player_one_score"
     t.integer  "player_two_score"
     t.integer  "winner_id"
+    t.boolean  "bye",              default: false
     t.index ["round_id"], name: "index_matches_on_round_id", using: :btree
   end
 
   create_table "players", force: :cascade do |t|
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "name"
     t.integer  "user_id"
-    t.integer  "games"
-    t.integer  "wins"
+    t.integer  "games",          default: 0
+    t.integer  "wins",           default: 0
     t.integer  "win_percentage"
     t.index ["user_id"], name: "index_players_on_user_id", using: :btree
   end

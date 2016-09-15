@@ -24,4 +24,24 @@ module NewTournament
     click_button 'Add to tournament'
   end
 
+  def add_five_players
+    FactoryGirl.create(:player, name: 'Sean')
+    FactoryGirl.create(:player, name: 'Sina')
+    FactoryGirl.create(:player, name: 'Brad')
+    FactoryGirl.create(:player, name: 'Chris')
+    FactoryGirl.create(:player, name: 'Dwain')
+    signin
+    create_tournament
+    select 'Sean', from: 'tournament[players]'
+    click_button 'Add to tournament'
+    select 'Sina', from: 'tournament[players]'
+    click_button 'Add to tournament'
+    select 'Brad', from: 'tournament[players]'
+    click_button 'Add to tournament'
+    select 'Chris', from: 'tournament[players]'
+    click_button 'Add to tournament'
+    select 'Dwain', from: 'tournament[players]'
+    click_button 'Add to tournament'
+  end
+
 end

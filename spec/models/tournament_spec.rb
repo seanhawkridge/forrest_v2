@@ -16,12 +16,18 @@ describe Tournament do
   describe '#build_tournament' do
 
     it 'creates a first round' do
-      player_one = FactoryGirl.create(:player)
-      player_two = FactoryGirl.create(:player)
-      @tournament.players << [player_one, player_two]
+      players = FactoryGirl.create_list(:player, 2)
+      @tournament.players << players
       expect(@tournament.rounds).to be_empty
       @tournament.build_tournament
       expect(@tournament.rounds.first).to be_a Round
+    end
+
+    it 'creates a round with the correct number of players' do
+      players = FactoryGirl.create_list(:player, 2)
+      @tournament.players << players
+      @tournament.build_tournament
+      expect(@tournament.rounds.first.matches)
     end
 
     it 'creates following rounds' do
@@ -57,6 +63,28 @@ describe Tournament do
       @tournament.process_results(@tournament.rounds[0].id)
 
       expect(@tournament.champion).to be_truthy
+    end
+
+  end
+
+  describe '#byes_array' do
+
+    it 'generates an array of symbols whose legnth make up a power of two
+        when added to the player count' do
+      players = FactoryGirl.create_list(:player, 5)
+      @tournament.players << players
+      expect(@tournament.byes_array).to eq [:bye, :bye, :bye]
+    end
+
+  end
+
+  describe '#players_and_byes' do
+
+    it 'returns an array of alternating players and byes whose size is a power of 2' do
+      players = FactoryGirl.create_list(:player, 5)
+      @tournament.players << players
+      @tournament.byes_array
+      expect(@tournament.players_and_byes).to eq [players[0], :bye, players[1], :bye, players[2], :bye, players[3], players[4]]
     end
 
   end

@@ -20,6 +20,13 @@ describe Round do
       expect(@round.matches.first.player_two).to eq @player_two
     end
 
+    it 'creates a match when passed a player and a bye' do
+      @round.create_match(@player_one, :bye)
+      expect(@round.matches.first.player_one).to eq @player_one
+      expect(@round.matches.first.player_two).to eq nil
+      expect(@round.matches.first.bye).to eq true
+    end
+
   end
 
   describe '#collect_winners' do
@@ -44,6 +51,18 @@ describe Round do
       matches = FactoryGirl.create_list(:match, 2)
       @round.matches << matches
       expect(@round.is_final?).to be false
+    end
+
+  end
+
+  describe '#update_byes' do
+
+    it 'updates any matches with a bye' do
+      match_one = FactoryGirl.create(:match, player_two: nil, bye: true)
+      match_two = FactoryGirl.create(:match)
+      @round.matches << [match_one, match_two]
+      @round.update_byes
+      expect(@round.matches[0].winner).to eq match_one.player_one
     end
 
   end
