@@ -20,7 +20,7 @@
   <% @tournament.rounds.each.with_index do |round, i| %>
     <div id="<%= "round-#{i+1}" %>">
       <h1><%= "Round #{i+1}" %></h1>
-      <% round.matches.each.with_index do |match, i| %>
+      <% round.matches.order_by_id.each.with_index do |match, i| %>
         <h2><%= "Match #{i+1}" %></h2>
         <h3>p1: <%= match.player_one ? match.player_one.name : match.player_placeholder %></h3>
         <h3>p2: <%= match.player_two ? match.player_two.name : match.player_placeholder %></h3>

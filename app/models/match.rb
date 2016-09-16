@@ -5,6 +5,8 @@ class Match < ApplicationRecord
   belongs_to :winner, class_name: 'Player', optional: true
   belongs_to :round
 
+  scope :order_by_id, -> { order(id: :asc) }
+
   def update_results(p1_score, p2_score)
     results = calculate_results(p1_score, p2_score)
     results[:winner].update_win_count
