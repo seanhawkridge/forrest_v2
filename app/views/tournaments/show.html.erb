@@ -9,7 +9,7 @@
   </ul>
 
   <%= form_for @tournament, html: {id: "tournament_players"} do |f| %>
-      <%= f.collection_select(:players, Player.all.order(:name), :id, :name) %>
+      <%= f.collection_select(:players, Player.not_selected(@tournament), :id, :name) %>
       <%= f.submit "Add to tournament" %>
   <% end %>
 
