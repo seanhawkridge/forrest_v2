@@ -27,6 +27,7 @@ group :development do
   gem 'better_errors'
   gem 'rails_layout'
   gem 'spring-commands-rspec'
+  gem 'pry'
 end
 group :development, :test do
   gem 'factory_girl_rails'
