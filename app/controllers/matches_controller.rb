@@ -5,7 +5,10 @@ class MatchesController < ApplicationController
   end
 
   def create
-    @match = Match.new(match_params)
+    player_one = Player.find(params[:match][:player_one_id])
+    player_two = Player.find(params[:match][:player_two_id])
+    [player_one, player_two].each { |player| player.new_nickname }
+    @match = Match.new(player_one: player_one, player_two: player_two)
     @match.save
     redirect_to @match
   end
@@ -31,7 +34,7 @@ class MatchesController < ApplicationController
   end
 
   def match_params
-    params.require(:match).permit(:player_one_id, :player_two_id, :round_id,
+    params.require(:match).permit(:player_one_id, :player_two_id, :player_one_nickname, :player_two_nickname, :round_id,
                                   :player_one_score, :player_two_score, :winner,
                                   :bye)
   end

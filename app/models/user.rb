@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
       user.provider = auth['provider']
       user.uid = auth['uid']
       if auth['info']
-         user.name = auth['info']['name'] || ""
+         user.first_name = auth['info']['first_name'] || ""
+         user.last_name = auth['info']['last_name'] || ""
          user.email = auth['info']['email'] || ""
          user.image = auth['info']['image'] || ""
       end
@@ -16,7 +17,7 @@ class User < ActiveRecord::Base
   end
 
   def create_player
-    @player = Player.create(name: self.name, user: self)
+    @player = Player.create(first_name: self.first_name, last_name: self.last_name, user: self)
   end
 
 end

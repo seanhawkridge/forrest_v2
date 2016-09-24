@@ -19,7 +19,7 @@ feature 'Entering scores' do
     first("input[id$='match_player_one_score']").set "3"
     first("input[id$='match_player_two_score']").set "1"
     first("input[type='submit']").click
-    expect(Match.first.winner.name).to eq 'Sean'
+    expect(Match.first.winner.name).to eq 'Sean Hawkridge'
   end
 
   scenario 'the next round is updated' do
