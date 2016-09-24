@@ -26,7 +26,8 @@
         <h3>p2: <%= match.player_two ? match.player_two.name_with_nickname : match.player_placeholder %></h3>
         <% if match.winner %>
           <h3>Winner: <%= match.winner.name %></h3>
-        <% else %>
+        <% end %>
+        <% if match.includes_player? current_user.id %>
           <%= form_for match do |f| %>
             <p>
               <%= f.label :player_one_score %>
@@ -49,3 +50,5 @@
   <% end %>
 
 <% end %>
+
+<% console %>

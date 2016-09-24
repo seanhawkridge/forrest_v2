@@ -33,6 +33,10 @@ class Match < ApplicationRecord
     self.update_attributes(winner: player_one)
   end
 
+  def includes_player? player_id
+    player_id == player_one.id || player_id == player_two.id
+  end
+
   private
 
   def calculate_results p1_score, p2_score
