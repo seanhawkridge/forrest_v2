@@ -1,0 +1,7 @@
+<%= form_for @match, url: {action: "create"} do |f| %>
+  <%= f.collection_select(:player_one_id, Player.all, :id, :name) %>
+  <%= f.collection_select(:player_two_id, Player.all, :id, :name) %>
+  <%= f.submit "Create Match" %>
+<% end %>
+
+<% console %>

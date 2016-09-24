@@ -12,7 +12,6 @@ module NewTournament
     FactoryGirl.create(:player, name: 'Sina')
     FactoryGirl.create(:player, name: 'Brad')
     FactoryGirl.create(:player, name: 'Chris')
-    signin
     create_tournament
     select 'Sean', from: 'tournament[players]'
     click_button 'Add to tournament'
@@ -30,7 +29,6 @@ module NewTournament
     FactoryGirl.create(:player, name: 'Brad')
     FactoryGirl.create(:player, name: 'Chris')
     FactoryGirl.create(:player, name: 'Dwain')
-    signin
     create_tournament
     select 'Sean', from: 'tournament[players]'
     click_button 'Add to tournament'

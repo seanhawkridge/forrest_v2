@@ -3,7 +3,7 @@ class Match < ApplicationRecord
   belongs_to :player_one, class_name: 'Player', optional: true
   belongs_to :player_two, class_name: 'Player', optional: true
   belongs_to :winner, class_name: 'Player', optional: true
-  belongs_to :round
+  belongs_to :round, optional: true
 
   scope :order_by_id, -> { order(id: :asc) }
 

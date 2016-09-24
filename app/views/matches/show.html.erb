@@ -1,0 +1,17 @@
+<%= @match.player_one.name %>
+<%= @match.player_two.name %>
+<% if @match.winner %>
+  <h3>Winner: <%= @match.winner.name %></h3>
+<% else %>
+  <%= form_for @match do |f| %>
+    <p>
+      <%= f.label :player_one_score %>
+      <%= f.text_field :player_one_score %>
+      <%= f.label :player_two_score %>
+      <%= f.text_field :player_two_score %>
+    </p>
+    <p>
+      <%= f.submit %>
+    </p>
+  <% end %>
+<% end %>

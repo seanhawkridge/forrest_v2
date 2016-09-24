@@ -1,6 +1,7 @@
 feature 'Entering scores' do
 
-  before do
+  before(:each) do
+    signin
     create_tournament
     add_four_players
     click_button 'Generate Matches'

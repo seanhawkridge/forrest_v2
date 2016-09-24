@@ -1,5 +1,9 @@
 feature 'Starting a tournament' do
 
+  before(:each) do
+    signin
+  end
+
   scenario 'with a first round of players' do
     create_tournament
     add_four_players
