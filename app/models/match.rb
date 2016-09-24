@@ -9,7 +9,14 @@ class Match < ApplicationRecord
 
   scope :order_by_id, -> { order(id: :asc) }
 
-  LOSER_MESSAGES = ['you suck', 'try harder', 'step it up', 'try again', 'even Dwain would beat you']
+  CLOSE_RESULT_MESSAGES = ['almost there!', 'that was close', 'super close',
+                          'tight!', 'maybe the pressure got to you']
+  MEDIUM_RESULT_MESSAGES = ['try harder', 'step it up', 'try again',
+                           'life is like a box of chocolates']
+  THRASHING_MESSAGES = ['even Dwain would beat you',
+                       'have you considered lawn bowls?',
+                       'were you playing with your eyes closed?',
+                       'time to retire the paddle, friend']
 
   def update_results p1_score, p2_score
     results = calculate_results p1_score, p2_score
@@ -47,7 +54,17 @@ class Match < ApplicationRecord
     message = ":table_tennis_paddle_and_ball: " +
     "#{results[:winner].name} just beat #{results[:loser].name}. " +
     "The score was #{results[:winning_score]} : #{results[:losing_score]}. " +
-    "Go #{results[:winner].name}! #{results[:loser].name} - #{LOSER_MESSAGES.sample}."
+    "Go #{results[:winner].name}! #{results[:loser].name} - #{insult_loser results[:losing_score]}."
     notifier.ping message
+  end
+
+  def insult_loser score
+    if score.to_i > 17
+      CLOSE_RESULT_MESSAGES.sample
+    elsif score.to_i > 10
+      MEDIUM_RESULT_MESSAGES.sample
+    else
+      THRASHING_MESSAGES.sample
+    end
   end
 end
