@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160923155434) do
+ActiveRecord::Schema.define(version: 20160926131746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,11 +31,13 @@ ActiveRecord::Schema.define(version: 20160923155434) do
   create_table "players", force: :cascade do |t|
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.string   "name"
     t.integer  "user_id"
     t.integer  "games",          default: 0
     t.integer  "wins",           default: 0
     t.integer  "win_percentage", default: 0
+    t.string   "nickname"
+    t.string   "first_name"
+    t.string   "last_name"
     t.index ["user_id"], name: "index_players_on_user_id", using: :btree
   end
 
@@ -61,13 +63,14 @@ ActiveRecord::Schema.define(version: 20160923155434) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
     t.string   "provider"
     t.string   "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "email"
     t.string   "image"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_foreign_key "matches", "rounds"

@@ -13,6 +13,7 @@ class TournamentsController < ApplicationController
   def update
     @tournament = Tournament.find(params[:id])
     @player = Player.find(params[:tournament][:players])
+    @player.new_nickname
     @tournament.players << @player
     @tournament.save
     redirect_to @tournament
