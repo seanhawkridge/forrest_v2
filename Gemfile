@@ -23,6 +23,7 @@ gem 'high_voltage'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'pg'
+gem 'slack-notifier'
 group :development do
   gem 'better_errors'
   gem 'rails_layout'
