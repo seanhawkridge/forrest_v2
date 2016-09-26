@@ -216,6 +216,7 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
+    slack-notifier (1.5.1)
     slop (3.6.0)
     spring (1.7.2)
     spring-commands-rspec (1.0.4)
@@ -283,6 +284,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   selenium-webdriver
   shoulda-matchers
+  slack-notifier
   spring
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
@@ -295,4 +297,4 @@ RUBY VERSION
    ruby 2.3.0p0
 
 BUNDLED WITH
-   1.13.0
+   1.13.1
