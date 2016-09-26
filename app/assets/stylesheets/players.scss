@@ -1,3 +1,25 @@
 // Place all the styles related to the players controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#players {
+  margin-top: 50px;
+  padding-top: 4em;
+  .player {
+    text-align: center;
+    margin: 2em 0;
+    .image-container {
+      display: inline-block;
+      height: 100px;
+      width: 100px;
+      border-radius: 100%;
+      overflow: hidden;
+      background-image: image-url("frst.gif") no-repeat center center;
+      background-size: cover;
+    }
+    &.leader .image-container {
+      height: 150px;
+      width: 150px;
+    }
+  }
+}

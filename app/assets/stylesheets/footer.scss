@@ -1,0 +1,21 @@
+footer#colophon {
+  background: #222;
+  width: 100%;
+  padding: 5em 0;
+  text-align: center;
+  h2 {
+    color: $white;
+    padding-bottom: 1em;
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      height: 5px;
+      width: 20%;
+      display: block;
+      background: $red;
+      left: 40%;
+      bottom: 0;
+    }
+  }
+}

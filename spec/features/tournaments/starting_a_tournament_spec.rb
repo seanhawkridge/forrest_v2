@@ -11,22 +11,20 @@ feature 'Starting a tournament' do
     expect(page).to have_no_css('#tournament_players')
     expect(page).to have_no_css('#generate_matches')
     expect(page).to have_content('Round 1')
-    expect(page).to have_content('Match 1')
-    expect(page).to have_content('p1: Sean')
-    expect(page).to have_content('p2: Sina')
-    expect(page).to have_content('Match 2')
-    expect(page).to have_content('p1: Brad')
-    expect(page).to have_content('p2: Chris')
+    expect(page).to have_content('Sean')
+    expect(page).to have_content('Sina')
+    expect(page).to have_content('Final')
+    expect(page).to have_content('Brad')
+    expect(page).to have_content('Chris')
   end
 
   scenario 'with a prepared second round' do
     create_tournament
     add_four_players
     click_button 'Generate Matches'
-    expect(page).to have_content('Round 2')
-    expect(page).to have_content('Match 1')
-    expect(page).to have_content('p1: player')
-    expect(page).to have_content('p2: player')
+    expect(page).to have_content('Final')
+    expect(page).to have_content('player')
+    expect(page).to have_content('player')
   end
 
   scenario 'with byes' do
@@ -34,17 +32,15 @@ feature 'Starting a tournament' do
     add_five_players
     click_button 'Generate Matches'
     expect(page).to have_content('Round 1')
-    expect(page).to have_content('p1: Sean')
-    expect(page).to have_content('p2: bye')
+    expect(page).to have_content('Sean')
+    expect(page).to have_content('bye')
     expect(page).to have_content('Winner: Sean')
-    expect(page).to have_content('Match 2')
-    expect(page).to have_content('p1: Sina')
-    expect(page).to have_content('p2: bye')
+    expect(page).to have_content('Sina')
+    expect(page).to have_content('bye')
     expect(page).to have_content('Winner: Sina')
-    expect(page).to have_content('Round 2')
-    expect(page).to have_content('Match 1')
-    expect(page).to have_content('p1: Sean')
-    expect(page).to have_content('p2: Sina')
+    expect(page).to have_content('Final')
+    expect(page).to have_content('Sean')
+    expect(page).to have_content('Sina')
   end
 
 end

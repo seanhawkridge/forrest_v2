@@ -26,7 +26,7 @@ feature 'Entering scores' do
     first("input[id$='match_player_one_score']").set "3"
     first("input[id$='match_player_two_score']").set "1"
     first("input[type='submit']").click
-    within("#round-2") { expect(page).to have_content('p1: Sean') }
+    within("#round-2") { expect(page).to have_content('Sean') }
   end
 
   scenario 'in the final round' do

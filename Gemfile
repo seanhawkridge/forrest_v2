@@ -37,6 +37,7 @@ group :development, :test do
   gem 'rspec-activemodel-mocks'
   gem 'dotenv-rails'
   gem 'shoulda-matchers'
+  gem 'binding_of_caller'
 end
 group :production do
   gem 'rails_12factor'

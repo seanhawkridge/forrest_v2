@@ -8,6 +8,7 @@ class Match < ApplicationRecord
   belongs_to :round, optional: true
 
   scope :order_by_id, -> { order(id: :asc) }
+  scope :with_results, -> { where.not(winner: nil).where(bye: false).order(updated_at: :desc) }
 
   CLOSE_RESULT_MESSAGES = ['almost there!', 'that was close.', 'super close.',
                           'tight!', 'maybe the pressure got to you?']
@@ -35,6 +36,18 @@ class Match < ApplicationRecord
 
   def includes_player? player_id
     player_id == player_one.id || player_id == player_two.id
+  end
+
+  def loser
+    player_one == winner ? player_two : player_one
+  end
+
+  def scores
+    if player_one == winner
+      { winning_score: player_one_score, losing_score: player_two_score }
+    else
+      { winning_score: player_two_score, losing_score: player_one_score }
+    end
   end
 
   private

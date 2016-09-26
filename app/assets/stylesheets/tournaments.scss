@@ -1,3 +1,26 @@
-// Place all the styles related to the tournaments controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#tournament-players {
+  ul.players-list {
+    list-style: none;
+    list-style-image: none;
+    margin: none;
+    display: inline-block;
+    text-align: center;
+    li {
+      display: inline;
+      &:after {
+        content: " | ";
+      }
+      &:last-child:after {
+        content: none;
+      }
+    }
+  }
+}
+
+#new-tournament {
+  
+}
+
+#tournament-bracket {
+
+}

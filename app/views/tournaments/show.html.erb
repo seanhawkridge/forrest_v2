@@ -1,54 +1,85 @@
-<%= @tournament.name %>
+<section id="tournament-players">
+  <div class="row">
+    <div class="small-12 medium-8 medium-centered columns">
+      <h1><%= @tournament.name %></h1>
+    </div>
+  </div>
 
 <% if @tournament.rounds.empty? %>
+  <div class="row">
+    <div class="small-12 medium-4 medium-centered columns">
+      <ul class="players-list">
+        <% @tournament.players.map do |player| %>
+          <li><%= player.name %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 
-  <ul class="players_list">
-    <% @tournament.players.map do |player| %>
-      <li><%= player.name %></li>
-    <% end %>
-  </ul>
+  <div class="row">
+    <div class="small-12 medium-6 medium-centered columns">
+      <%= form_for @tournament, html: {id: "tournament_players"} do |f| %>
+          <%= f.collection_select(:players, Player.not_selected(@tournament), :id, :name) %>
+          <%= f.submit "Add to tournament" %>
+      <% end %>
+    </div>
+  </div>
 
-  <%= form_for @tournament, html: {id: "tournament_players"} do |f| %>
-      <%= f.collection_select(:players, Player.not_selected(@tournament), :id, :name) %>
-      <%= f.submit "Add to tournament" %>
-  <% end %>
+  <div class="row">
+    <div class="small-12 medium-6 medium-centered columns">
+      <%= button_to "Generate Matches", {action: :build_tournament}, {id: "generate_matches"} %>
+    </div>
+  </div>
 
-  <%= button_to "Generate Matches", {action: :build_tournament}, {id: "generate_matches"} %>
+</section>
 
 <% else %>
 
+<section id="tournament-bracket">
+
   <% @tournament.rounds.each.with_index do |round, i| %>
-    <div id="<%= "round-#{i+1}" %>">
-      <h1><%= "Round #{i+1}" %></h1>
-      <% round.matches.order_by_id.each.with_index do |match, i| %>
-        <h2><%= "Match #{i+1}" %></h2>
-        <h3>p1: <%= match.player_one ? match.player_one.name_with_nickname : match.player_placeholder %></h3>
-        <h3>p2: <%= match.player_two ? match.player_two.name_with_nickname : match.player_placeholder %></h3>
-        <% if match.winner %>
-          <h3>Winner: <%= match.winner.name %></h3>
-        <% end %>
-        <% if match.includes_player? current_user.id %>
-          <%= form_for match do |f| %>
-            <p>
-              <%= f.label :player_one_score %>
-              <%= f.text_field :player_one_score %>
-              <%= f.label :player_two_score %>
-              <%= f.text_field :player_two_score %>
-              <%= f.hidden_field :tournament_id, value: @tournament.id %>
-            </p>
-            <p>
-              <%= f.submit %>
-            </p>
-          <% end %>
-        <% end %>
+  <div id="<%= "round-#{i+1}" %>">
+    <div class="row">
+      <% if round.is_final? %>
+        <h1>Final!</h1>
+      <% else %>
+        <h1><%= "Round #{i+1}" %></h1>
       <% end %>
+        <% round.matches.order_by_id.each.with_index do |match, i| %>
+        <% if round.is_final? %>
+          <div class="small-12 medium-6 medium-centered columns">
+        <% else %>
+          <div class="small-12 medium-6 columns">
+        <% end %>
+          <div class="match">
+            <div class="match__players">
+              <h4><%= match.player_one ? match.player_one.name_with_nickname : match.player_placeholder %></h4>
+              <%== "<h4>vs.</h4>" unless match.player_placeholder == "bye" %>
+              <h4><%= match.player_two ? match.player_two.name_with_nickname : match.player_placeholder %></h4>
+            </div>
+            <div class="match__results">
+              <% if match.winner %>
+                <h4>Winner: <%= match.winner.name %></h4>
+              <% else %>
+                <%= form_for match do |f| %>
+                  <div class="score"><%= f.label :player_one_score %><%= f.text_field :player_one_score %></div>
+                  <div class="score"><%= f.label :player_two_score %><%= f.text_field :player_two_score %></div>
+                  <%= f.hidden_field :tournament_id, value: @tournament.id %>
+                  <%= f.submit %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <% end %>
     </div>
+  </div>
   <% end %>
 
   <% if @tournament.champion %>
-    Champion: <%= @tournament.champion.name_with_nickname %>
+    <h1>Champion: <%= @tournament.champion.name_with_nickname %></h1>
   <% end %>
 
-<% end %>
+</section>
 
-<% console %>
+<% end %>

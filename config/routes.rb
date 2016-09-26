@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :tournaments
   resources :matches
   resources :players
-  root to: 'players#index'
+  root to: 'visitors#index'
   get '/auth/:provider/callback' => 'sessions#create'
   get '/signin' => 'sessions#new', :as => :signin
   get '/signout' => 'sessions#destroy', :as => :signout

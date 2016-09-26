@@ -14,7 +14,7 @@ class MatchesController < ApplicationController
   end
 
   def index
-    @matches = Match.all
+    @matches = Match.with_results
   end
 
   def show

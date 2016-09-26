@@ -1,3 +1,6 @@
 <% @matches.each do |match| %>
-
+  <h4><%= match.winner.name %><h4>
+    <p>beat</p>
+  <h4><%= match.loser.name %></h4>
+  <p>Scores: <%= "#{match.scores[:winning_score]}:#{match.scores[:losing_score]}" %></p>
 <% end %>

@@ -1,0 +1,34 @@
+#home {
+  height: 95vh;
+  margin-top: -50px;
+  width: 100%;
+  background: image-url("giphy.gif") no-repeat center center;
+  background-size: cover;
+  border: 20px solid white;
+  border-top: none;
+  text-align: center;
+  display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+
+	align-items: center;
+  h1 {
+    display: inline-block;
+    margin: 0 auto;
+    border-top: 5px solid red;
+    border-bottom: 5px solid red;
+    font-family: "Oswald";
+    font-size: 4em;
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+  }
+}
+
+section {
+  padding: 0 0 3em;
+}

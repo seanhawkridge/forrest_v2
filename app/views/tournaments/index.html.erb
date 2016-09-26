@@ -1,10 +1,33 @@
-
-<% @incomplete_tournaments.map do |tournament| %>
-  <h4><%= tournament.name %><h4>
-  <%= link_to "continue", tournament_path(tournament) %>
-<% end %>
-
-<% @completed_tournaments.map do |tournament| %>
-  <h4><%= tournament.name %><h4>
-  <p><%= tournament.champion.name %></p>
-<% end %>
+<div id="tournaments">
+  <% if user_signed_in? %>
+    <section class="tournaments--in-progress">
+      <div class="row">
+        <div class="small-12 medium-10 medium-centered columns">
+        <h1>Tournaments in Progress</h1>
+        <div class="row">
+          <% @incomplete_tournaments.map do |tournament| %>
+            <div class="small-12 medium-4 end columns">
+              <h4><%= tournament.name %></h4>
+              <%= link_to "continue", tournament_path(tournament), class: "button" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  <% end %>
+  <section class="tournaments--completed">
+    <div class="row">
+      <div class="small-12 medium-10 medium-centered columns">
+        <h2>Past Tournaments</h2>
+        <div class="row">
+          <% @completed_tournaments.map do |tournament| %>
+            <div class="small-12 medium-4 end columns">
+              <h4><%= tournament.name %><h4>
+              <p>Champion: <%= tournament.champion.name %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

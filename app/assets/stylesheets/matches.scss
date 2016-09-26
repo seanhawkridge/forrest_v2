@@ -1,3 +1,41 @@
 // Place all the styles related to the matches controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.match {
+  margin: 3em 0;
+  .match__players {
+    padding: 0 0 1em 0;
+    margin: 0 0 1em 0;
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      height: 3px;
+      width: 30%;
+      left: 35%;
+      background: $red;
+      display: block;
+    }
+  }
+  .match__results {
+    input[type="submit"] {
+      display: block;
+      float: none;
+      clear: both;
+      margin: 0 auto;
+    }
+    .score {
+      text-align: center;
+      label {
+        display: inline;
+        margin: 0 1em 0 0;
+      }
+      input[type="text"] {
+        display: inline;
+        width: 10%;
+      }
+    }
+  }
+}

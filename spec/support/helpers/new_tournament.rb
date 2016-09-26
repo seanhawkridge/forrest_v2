@@ -4,7 +4,7 @@ module NewTournament
     visit root_path
     click_link 'New Tournament'
     fill_in 'Name', with: 'Test Tournament'
-    click_button 'Create Tournament'
+    click_button 'Build Tournament'
   end
 
   def add_four_players

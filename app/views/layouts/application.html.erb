@@ -5,6 +5,7 @@
     <title><%= content_for?(:title) ? yield(:title) : "Forrest V2" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Forrest V2" %>">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag 'application', 'https://fonts.googleapis.com/css?family=Oswald:300,400|Raleway' %>
     <%# Modernizr is required for Zurb Foundation %>
     <%= javascript_include_tag 'vendor/modernizr' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -18,5 +19,8 @@
        <%= render 'layouts/messages' %>
        <%= yield %>
     </main>
+    <footer id="colophon">
+      <%= render 'layouts/footer' %>
+    </footer>
   </body>
 </html>
