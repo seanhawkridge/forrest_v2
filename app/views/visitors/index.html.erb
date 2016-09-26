@@ -1,29 +1,29 @@
 <div id="home">
   <h1>Forrest</h1>
 </div>
-<section id="players">
+<div id="players" class="home">
   <h2>Current Leaders</h2>
   <div class="row">
-  <% @players.each do |player| %>
-  <div class="player small-10 medium-4 end columns">
-    <div class="image-container"><%= image_tag player.user.image %></div>
-    <h3><%= player.first_name %> <%= player.last_name %></h3>
-    <p>Games: <%= player.games %> | Wins: <%= player.wins %></p>
-    <p>Win Percentage: <%= number_to_percentage(player.win_percentage, precision: 0) %></p>
+    <% @players.each do |player| %>
+      <div class="player small-12 medium-3 end columns">
+        <div class="image-container"><%= image_tag player.user.image %></div>
+        <h3><%= player.first_name %> <%= player.last_name %></h3>
+        <p>Games: <%= player.games %> | Wins: <%= player.wins %></p>
+        <p>Win Percentage: <%= number_to_percentage(player.win_percentage, precision: 0) %></p>
+      </div>
+    <% end %>
   </div>
-  <% end %>
-  </div>
-</section>
-<section id="matches">
+</div>
+<div id="matches" class="home">
   <h2>Recent Results</h2>
   <div class="row">
-  <% @matches.each do |match| %>
-    <div class="small-12 medium-4 columns">
-      <h4><%= match.winner.name %></h4>
-      <p>beat</p>
-      <h4><%= match.loser.name %></h4>
-      <p><%= "#{match.scores[:winning_score]} : #{match.scores[:losing_score]}" %></p>
-    </div>
-  <% end %>
+    <% @matches.each do |match| %>
+      <div class="small-12 medium-4 columns">
+        <h4><%= match.winner.name %></h4>
+        <p>beat</p>
+        <h4><%= match.loser.name %></h4>
+        <p><%= "#{match.scores[:winning_score]} : #{match.scores[:losing_score]}" %></p>
+      </div>
+    <% end %>
   </div>
-</section>
+</div>

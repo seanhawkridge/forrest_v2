@@ -3,6 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #players {
+  padding: 0 0 4em 0;
   .player {
     text-align: center;
     margin: 2em 0;
@@ -14,10 +15,18 @@
       overflow: hidden;
       background-image: image-url("frst.gif") no-repeat center center;
       background-size: cover;
+      margin-bottom: 0.5em;
     }
-    &.leader .image-container {
-      height: 150px;
-      width: 150px;
+    h2 {
+      color: $red;
+      margin-bottom: 0.5em;
+    }
+    &.leader {
+      margin-bottom: 4em;
+      .image-container {
+        height: 150px;
+        width: 150px;
+      }
     }
   }
 }

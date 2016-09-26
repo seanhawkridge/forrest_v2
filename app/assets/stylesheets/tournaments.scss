@@ -1,3 +1,24 @@
+#tournaments {
+  padding: 0 0 0 0;
+  .tournaments--completed {
+    padding: 4em 0;
+    background: $red;
+    h1, h2, p, a {
+      color: $white;
+    }
+  }
+  .tournaments--in-progress {
+    padding: 0 0 4em 0;
+    display: block;
+    overflow: hidden;
+    width: 100%;
+  }
+}
+
+#tournament {
+  padding: 0 0 4em 0;
+}
+
 #tournament-players {
   ul.players-list {
     list-style: none;
@@ -18,9 +39,40 @@
 }
 
 #new-tournament {
-  
 }
 
 #tournament-bracket {
+}
 
+#champion {
+  display: block;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: transparentize($red, 0.2);
+  z-index: 999;
+  .content {
+    position: absolute;
+    display: block;
+    width: 60%;
+    height: 60%;
+    top: 20%;
+    left: 20%;
+    padding: 1em;
+    background: image-url("win.gif") no-repeat center center;
+    background-size: cover;
+    border: 5px solid $white;
+    display: -webkit-flex;
+  	display: flex;
+
+  	-webkit-align-items: center;
+  	-webkit-box-align: center;
+    h1 {
+      text-align: center;
+      color: $white;
+      text-transform: uppercase;
+    }
+  }
 }

@@ -1,21 +1,26 @@
-<div id="tournaments">
+<div id="tournaments" class="content">
   <% if user_signed_in? %>
-    <section class="tournaments--in-progress">
+    <div class="tournaments--in-progress">
       <div class="row">
         <div class="small-12 medium-10 medium-centered columns">
-        <h1>Tournaments in Progress</h1>
-        <div class="row">
-          <% @incomplete_tournaments.map do |tournament| %>
-            <div class="small-12 medium-4 end columns">
-              <h4><%= tournament.name %></h4>
-              <%= link_to "continue", tournament_path(tournament), class: "button" %>
+          <% if @incomplete_tournaments %>
+            <h1>Tournaments in Progress</h1>
+            <div class="row">
+              <% @incomplete_tournaments.map do |tournament| %>
+                <div class="small-12 medium-4 end columns">
+                  <h4><%= tournament.name %></h4>
+                  <%= link_to "continue", tournament_path(tournament), class: "button" %>
+                </div>
+              <% end %>
             </div>
+          <% else %>
+            <h2>No tournaments currently in progress</h2>
           <% end %>
         </div>
       </div>
-    </section>
+    </div>
   <% end %>
-  <section class="tournaments--completed">
+  <div class="tournaments--completed">
     <div class="row">
       <div class="small-12 medium-10 medium-centered columns">
         <h2>Past Tournaments</h2>
@@ -23,11 +28,11 @@
           <% @completed_tournaments.map do |tournament| %>
             <div class="small-12 medium-4 end columns">
               <h4><%= tournament.name %><h4>
-              <p>Champion: <%= tournament.champion.name %></p>
+              <p>Champion: <%= tournament.champion.name %> | <%= link_to "view", tournament_path(tournament) %></p>
             </div>
           <% end %>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </div>
