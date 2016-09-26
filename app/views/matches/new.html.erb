@@ -1,5 +1,5 @@
 
-<section id="match">
+<div id="match">
   <div class="row">
     <div class="small-12 medium-6 medium-centered columns">
       <h1>New Match</h1>
@@ -9,9 +9,10 @@
     <div class="small-12 medium-6 medium-centered columns">
       <%= form_for @match, url: {action: "create"} do |f| %>
         <%= f.collection_select(:player_one_id, Player.alphabetical, :id, :name) %>
+        <p>vs.</p>
         <%= f.collection_select(:player_two_id, Player.reverse_alphabetical, :id, :name) %>
         <%= f.submit "Create Match" %>
       <% end %>
     </div>
   </div>
-</section>
+</div>

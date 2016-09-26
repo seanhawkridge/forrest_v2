@@ -79,6 +79,11 @@
 
   <% if @tournament.champion %>
     <h1>Champion: <%= @tournament.champion.name_with_nickname %></h1>
+    <div id="champion">
+      <div class="content">
+        <h1><%= @tournament.champion.name_with_nickname %> is the Champion!</h1>
+      </div>
+    </div>
   <% end %>
 
 </section>

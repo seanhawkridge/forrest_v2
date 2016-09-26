@@ -12,6 +12,9 @@
 	display: flex;
 
 	-ms-flex-align: center;
+	display: -webkit-flex;
+	display: flex;
+
 	-webkit-align-items: center;
 	-webkit-box-align: center;
 
@@ -19,8 +22,8 @@
   h1 {
     display: inline-block;
     margin: 0 auto;
-    border-top: 5px solid red;
-    border-bottom: 5px solid red;
+    border-top: 5px solid $red;
+    border-bottom: 5px solid $red;
     font-family: "Oswald";
     font-size: 4em;
     color: white;
@@ -29,6 +32,48 @@
   }
 }
 
-section {
-  padding: 0 0 3em;
+.home {
+  padding: 4em 0;
+  h2 {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5em;
+    &:after {
+      content: "";
+      height: 3px;
+      width: 40%;
+      background: $white;
+      position: absolute;
+      display: block;
+      bottom: 0;
+      left: 30%;
+    }
+  }
+}
+
+#players.home {
+  padding: 4em 0;
+  background: $red;
+  width: 100%;
+  margin: 0 0 0 0;
+  float: left;
+  overflow: visible;
+  position: relative;
+  h1, h2, h3, p {
+    color: $white;
+  }
+  .image-container {
+    border: 3px solid $white;
+  }
+}
+
+#matches.home {
+  background: $white;
+  width: 100%;
+  margin: 0 0 0 0;
+  float: left;
+  overflow: visible;
+  h2:after {
+    background: $red;
+  }
 }

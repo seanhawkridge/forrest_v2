@@ -13,7 +13,7 @@
       margin: 0;
       &:before, &:after {
         content: '';
-        background: red;
+        background: $red;
         height: 3px;
         width: 1em;
         display: inline-block;

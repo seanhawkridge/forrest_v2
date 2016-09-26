@@ -2,18 +2,20 @@
 
 // COLOURS
 
-$red: red;
+$red: #F22241;
 $white: #fff;
 
 body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  background: $red;
 }
 
 main {
   flex: 1;
   margin-top: 3em;
+  background: $white;
 }
 
 
@@ -46,7 +48,7 @@ input[type="submit"], .button {
   font-size: 1em;
   color: $white;
   border-radius: 3px;
-  background-color: red;
+  background-color: $red;
   text-transform: uppercase;
   font-family: "Oswald";
   font-weight: 200;

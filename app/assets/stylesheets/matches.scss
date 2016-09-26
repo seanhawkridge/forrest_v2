@@ -2,6 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#match {
+  padding: 0 0 4em 0;
+}
 .match {
   margin: 3em 0;
   .match__players {
@@ -38,4 +41,8 @@
       }
     }
   }
+}
+
+.new_match p {
+  margin: 0 0 1em 0;
 }
