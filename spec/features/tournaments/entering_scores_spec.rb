@@ -1,9 +1,12 @@
 feature 'Entering scores' do
 
   before(:each) do
+    request.env['omniauth.auth'] = auth_mock
     signin
     create_tournament
     add_four_players
+    p "USERS=#{User.all.map { |user| user.first_name }}"
+    p "PLAYERS=#{Player.all.map { |player| player.first_name }}"
     click_button 'Generate Matches'
   end
 

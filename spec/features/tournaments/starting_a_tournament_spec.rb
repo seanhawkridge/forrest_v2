@@ -23,6 +23,8 @@ feature 'Starting a tournament' do
     add_four_players
     click_button 'Generate Matches'
     expect(page).to have_content('Final')
+    expect(page).to have_content('Round 2')
+    expect(page).to have_content('Match 1')
     expect(page).to have_content('player')
     expect(page).to have_content('player')
   end

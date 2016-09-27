@@ -15,7 +15,8 @@ class Tournament < ApplicationRecord
   end
 
   def create_first_round
-    pairings = create_pairings(players_and_byes)
+    seeded_players = match_order(matchups(players_and_byes)).flatten
+    pairings = create_pairings(seeded_players)
     first_round = rounds.create
     first_round_matches = pairings.map do |pairing|
       first_round.create_match(pairing[0], pairing[1])
@@ -88,12 +89,29 @@ class Tournament < ApplicationRecord
   end
 
   def players_and_byes
-    players.zip(byes_array).flatten.compact
+    players_and_byes = []
+    players_and_byes << players.sort_by(&:win_percentage)
+    players_and_byes << byes_array
+    players_and_byes.flatten
   end
 
   def update_byes
     rounds.first.update_byes
     update_next_round(rounds.first) unless rounds.first.is_final?
+  end
+
+  def matchups players
+    a, b = half_slice(players)
+    a.zip(b.reverse)
+  end
+
+  def match_order matchups
+    a, b = half_slice(matchups)
+    a.rotate(1).reverse.zip(b.rotate(3))
+  end
+
+  def half_slice collection
+    collection.each_slice(collection.count/2).to_a
   end
 
 end

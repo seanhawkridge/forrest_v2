@@ -35,7 +35,7 @@ class Match < ApplicationRecord
   end
 
   def includes_player? player_id
-    player_id == player_one.id || player_id == player_two.id
+    player_one && player_one.id == player_id || player_two && player_two.id == player_id
   end
 
   def loser
