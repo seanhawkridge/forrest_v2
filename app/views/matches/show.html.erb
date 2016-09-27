@@ -1,5 +1,5 @@
-<%= @match.player_one.name %>
-<%= @match.player_two.name %>
+<h3><%= @match.player_one.name_with_nickname %></h3>
+<h3><%= @match.player_two.name_with_nickname %></h3>
 <% if @match.winner %>
   <h3>Winner: <%= @match.winner.name %></h3>
 <% else %>

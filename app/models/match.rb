@@ -9,14 +9,14 @@ class Match < ApplicationRecord
 
   scope :order_by_id, -> { order(id: :asc) }
 
-  CLOSE_RESULT_MESSAGES = ['almost there!', 'that was close', 'super close',
-                          'tight!', 'maybe the pressure got to you']
-  MEDIUM_RESULT_MESSAGES = ['try harder', 'step it up', 'try again',
-                           'life is like a box of chocolates']
-  THRASHING_MESSAGES = ['even Dwain would beat you',
+  CLOSE_RESULT_MESSAGES = ['almost there!', 'that was close.', 'super close.',
+                          'tight!', 'maybe the pressure got to you?']
+  MEDIUM_RESULT_MESSAGES = ['try harder.', 'step it up.', 'try again.',
+                           'life is like a box of chocolates. Or is it?']
+  THRASHING_RESULT_MESSAGES = ['even Dwain would beat you.',
                        'have you considered lawn bowls?',
                        'were you playing with your eyes closed?',
-                       'time to retire the paddle, friend']
+                       'time to retire the paddle, friend.']
 
   def update_results p1_score, p2_score
     results = calculate_results p1_score, p2_score
@@ -51,20 +51,25 @@ class Match < ApplicationRecord
 
   def notify_slack results
     notifier = Slack::Notifier.new ENV["WEBHOOK_URL"]
-    message = ":table_tennis_paddle_and_ball: " +
-    "#{results[:winner].name} just beat #{results[:loser].name}. " +
-    "The score was #{results[:winning_score]} : #{results[:losing_score]}. " +
-    "Go #{results[:winner].name}! #{results[:loser].name} - #{insult_loser results[:losing_score]}."
+    message = slack_message results
     notifier.ping message
   end
 
-  def insult_loser score
-    if score.to_i > 17
+  def slack_message results
+    ":table_tennis_paddle_and_ball: " +
+    "#{results[:winner].name_with_nickname} just beat #{results[:loser].name_with_nickname}. " +
+    "The score was #{results[:winning_score]} : #{results[:losing_score]}. " +
+    "Go #{results[:winner].first_name}! " +
+    "#{results[:loser].last_name} - #{insult_loser(results[:winning_score], results[:losing_score])}"
+  end
+
+  def insult_loser winning_score, losing_score
+    if losing_score.to_i > (winning_score.to_i * 0.7)
       CLOSE_RESULT_MESSAGES.sample
-    elsif score.to_i > 10
+    elsif losing_score.to_i >= (winning_score.to_i * 0.5)
       MEDIUM_RESULT_MESSAGES.sample
     else
-      THRASHING_MESSAGES.sample
+      THRASHING_RESULT_MESSAGES.sample
     end
   end
 end
