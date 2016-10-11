@@ -6,6 +6,7 @@ class Player < ApplicationRecord
 
   scope :selected, -> (tournament) { includes(:tournaments).where(tournaments: {id: tournament.id}) }
   scope :not_selected, -> (tournament) { all.order(:first_name) - selected(tournament) }
+  scope :by_win_percantage, -> { order(win_percentage: :desc).order(games: :desc) }
 
   NICKNAMES = ['Pocket Rocket', 'Spin Drier', 'Legend', 'Boss', 'Big Man',
               'Delicate Touch', 'Sunday Driver', 'Shrimper', 'Swerver',

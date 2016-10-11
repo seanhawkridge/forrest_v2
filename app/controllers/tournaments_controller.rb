@@ -1,5 +1,10 @@
 class TournamentsController < ApplicationController
 
+  def index
+    @completed_tournaments = Tournament.complete
+    @incomplete_tournaments = Tournament.incomplete
+  end
+
   def create
     @tournament = Tournament.new(tournament_params)
     @tournament.save

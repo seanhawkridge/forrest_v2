@@ -1,6 +1,6 @@
 class PlayersController < ApplicationController
 
   def index
-    @players = Player.order(win_percentage: :desc).order(games: :desc)
+    @players = Player.by_win_percantage
   end
 end

@@ -1,0 +1,10 @@
+
+<% @incomplete_tournaments.map do |tournament| %>
+  <h4><%= tournament.name %><h4>
+  <%= link_to "continue", tournament_path(tournament) %>
+<% end %>
+
+<% @completed_tournaments.map do |tournament| %>
+  <h4><%= tournament.name %><h4>
+  <p><%= tournament.champion.name %></p>
+<% end %>
