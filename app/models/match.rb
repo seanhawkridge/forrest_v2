@@ -65,7 +65,7 @@ class Match < ApplicationRecord
   private
 
   def calculate_results p1_score, p2_score
-    if p1_score > p2_score
+    if p1_score.to_i > p2_score.to_i
       {winner: player_one, loser: player_two, winning_score: p1_score, losing_score: p2_score}
     else
       {winner: player_two, loser: player_one, winning_score: p2_score, losing_score: p1_score}
