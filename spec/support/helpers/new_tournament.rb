@@ -8,10 +8,9 @@ module NewTournament
   end
 
   def add_four_players
-    FactoryGirl.create(:player, first_name: 'Sean', last_name: 'Hawkridge')
-    FactoryGirl.create(:player, first_name: 'Sina', last_name: 'Zand')
-    FactoryGirl.create(:player, first_name: 'Brad', last_name: 'Jennings')
-    FactoryGirl.create(:player, first_name: 'Chris', last_name: 'Ward')
+    FactoryGirl.create(:user, first_name: 'Sina', last_name: 'Zand')
+    FactoryGirl.create(:user, first_name: 'Brad', last_name: 'Jennings')
+    FactoryGirl.create(:user, first_name: 'Chris', last_name: 'Ward')
     create_tournament
     select 'Sean Hawkridge', from: 'tournament[players]'
     click_button 'Add to tournament'
@@ -24,7 +23,7 @@ module NewTournament
   end
 
   def add_five_players
-    FactoryGirl.create(:player, first_name: 'Dwain', last_name: 'Faithfull')
+    FactoryGirl.create(:user, first_name: 'Dwain', last_name: 'Faithfull')
     add_four_players
     select 'Dwain Faithfull', from: 'tournament[players]'
     click_button 'Add to tournament'

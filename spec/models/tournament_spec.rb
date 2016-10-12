@@ -16,18 +16,18 @@ describe Tournament do
   describe '#build_tournament' do
 
     it 'creates a first round' do
-      players = FactoryGirl.create_list(:player, 2)
+      players = FactoryGirl.create_list(:player, 4)
       @tournament.players << players
       expect(@tournament.rounds).to be_empty
       @tournament.build_tournament
       expect(@tournament.rounds.first).to be_a Round
     end
 
-    it 'creates a round with the correct number of players' do
-      players = FactoryGirl.create_list(:player, 2)
+    it 'creates a round with the correct number of matches' do
+      players = FactoryGirl.create_list(:player, 4)
       @tournament.players << players
       @tournament.build_tournament
-      expect(@tournament.rounds.first.matches)
+      expect(@tournament.rounds.first.matches.count).to eq 2
     end
 
     it 'creates following rounds' do
@@ -84,7 +84,7 @@ describe Tournament do
       players = FactoryGirl.create_list(:player, 5)
       @tournament.players << players
       @tournament.byes_array
-      expect(@tournament.players_and_byes).to eq [players[0], :bye, players[1], :bye, players[2], :bye, players[3], players[4]]
+      expect(@tournament.players_and_byes).to eq [players[0], players[1], players[2], players[3], players[4], :bye, :bye, :bye]
     end
 
   end
