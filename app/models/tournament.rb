@@ -15,7 +15,7 @@ class Tournament < ApplicationRecord
   end
 
   def create_first_round
-    seeded_players = match_order(matchups(players_and_byes)).flatten
+    seeded_players = matchups(players_and_byes).flatten
     pairings = create_pairings(seeded_players)
     first_round = rounds.create
     first_round_matches = pairings.map do |pairing|
@@ -59,7 +59,7 @@ class Tournament < ApplicationRecord
   def update_next_round(round)
     pairings = create_pairings(round.collect_winners)
     next_round = rounds.find(round.id+1)
-    next_round.matches.each.with_index do |match, i|
+    next_round.matches.order_by_id.each.with_index do |match, i|
       match.update_attributes(player_one: pairings[i][0], player_two: pairings[i][1])
       match.save
     end
@@ -100,9 +100,10 @@ class Tournament < ApplicationRecord
     update_next_round(rounds.first) unless rounds.first.is_final?
   end
 
-  def matchups players
-    a, b = half_slice(players)
-    a.zip(b.reverse)
+  def matchups(players)
+    return players if players.count == 1
+    s1, s2 = (players).each_slice(players.count/2).to_a
+    matchups(s1.zip(s2.reverse));
   end
 
   def match_order matchups
