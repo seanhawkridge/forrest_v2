@@ -26,8 +26,12 @@ class TournamentsController < ApplicationController
 
   def build_tournament
     @tournament = Tournament.find(params[:id])
-    @tournament.build_tournament
-    redirect_to @tournament
+    if @tournament.players.size < 3
+      redirect_to @tournament, alert: "You need three players or more to start a tournament."
+    else
+      @tournament.build_tournament
+      redirect_to @tournament
+    end
   end
 
   private

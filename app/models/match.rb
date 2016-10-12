@@ -38,6 +38,10 @@ class Match < ApplicationRecord
     player_one && player_one.id == player_id || player_two && player_two.id == player_id
   end
 
+  def ready_to_play?
+    (player_one.is_a? Player) && (player_two.is_a? Player)
+  end
+
   def loser
     player_one == winner ? player_two : player_one
   end

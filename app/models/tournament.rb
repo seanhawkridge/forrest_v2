@@ -5,7 +5,7 @@ class Tournament < ApplicationRecord
   has_many :rounds
   belongs_to :champion, class_name: 'Player', optional: true
 
-  scope :incomplete, -> { where(champion_id: nil).limit(6) }
+  scope :incomplete, -> { where(champion_id: nil) }
   scope :complete, -> { where.not(champion_id: nil) }
 
   def build_tournament

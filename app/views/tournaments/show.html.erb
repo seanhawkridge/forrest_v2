@@ -60,7 +60,7 @@
               <div class="match__results">
                 <% if match.winner %>
                   <h4>Winner: <%= match.winner.name %></h4>
-                <% else %>
+                <% elsif match.ready_to_play? %>
                   <%= form_for match do |f| %>
                     <div class="score"><%= f.label :player_one_score %><%= f.text_field :player_one_score %></div>
                     <div class="score"><%= f.label :player_two_score %><%= f.text_field :player_two_score %></div>
