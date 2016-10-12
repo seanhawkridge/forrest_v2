@@ -7,10 +7,15 @@ class MatchesController < ApplicationController
   def create
     player_one = Player.find(params[:player_one])
     player_two = Player.find(params[:player_two])
-    [player_one, player_two].each { |player| player.new_nickname }
-    @match = Match.new(player_one: player_one, player_two: player_two)
-    @match.save
-    redirect_to @match
+    if player_one == player_two
+      redirect_to new_match_path,
+                  alert: "No playing with yourself #{player_one.first_name}"
+    else
+      [player_one, player_two].each { |player| player.new_nickname }
+      @match = Match.new(player_one: player_one, player_two: player_two)
+      @match.save
+      redirect_to @match
+    end
   end
 
   def index

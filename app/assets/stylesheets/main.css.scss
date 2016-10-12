@@ -18,8 +18,6 @@ main {
   background: $white;
 }
 
-
-
 @mixin twelve-columns {
   @extend .small-12;
   @extend .columns;
@@ -111,8 +109,7 @@ section {
   font-size: rem-calc(16);
   color: white;
 }
-.button-xs {
-  @extend .button;
-  @extend .radius;
-  @extend .tiny;
+
+.alert-box.alert {
+  background-color: $red
 }
