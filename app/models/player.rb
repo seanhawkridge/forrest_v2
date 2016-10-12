@@ -6,7 +6,7 @@ class Player < ApplicationRecord
 
   scope :selected, -> (tournament) { includes(:tournaments).where(tournaments: {id: tournament.id}) }
   scope :not_selected, -> (tournament) { all.order(:first_name) - selected(tournament) }
-  scope :by_win_percantage, -> { order(wins: :desc).order(win_percentage: :desc) }
+  scope :by_win_percantage, -> { order(wins: :desc).order(win_percentage: :desc).order(games: :asc) }
   scope :reverse_alphabetical, -> { all.order(:first_name).reverse_order }
   scope :alphabetical, -> { all.order(:first_name) }
 
