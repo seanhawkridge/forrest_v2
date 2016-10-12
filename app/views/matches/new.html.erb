@@ -1,5 +1,4 @@
-
-<div id="match">
+<div id="match" class="content">
   <div class="row">
     <div class="small-12 medium-6 medium-centered columns">
       <h1>New Match</h1>
@@ -7,11 +6,11 @@
   </div>
   <div class="row">
     <div class="small-12 medium-6 medium-centered columns">
-      <%= form_for @match, url: {action: "create"} do |f| %>
-        <%= f.collection_select(:player_one_id, Player.alphabetical, :id, :name) %>
+      <%= form_tag matches_path, method: :post do %>
+        <%= select_tag :player_one, options_from_collection_for_select(Player.alphabetical, :id, :name) %>
         <p>vs.</p>
-        <%= f.collection_select(:player_two_id, Player.reverse_alphabetical, :id, :name) %>
-        <%= f.submit "Create Match" %>
+        <%= select_tag :player_two, options_from_collection_for_select(Player.reverse_alphabetical, :id, :name) %>
+        <%= submit_tag "Create Match" %>
       <% end %>
     </div>
   </div>

@@ -1,5 +1,5 @@
 #tournaments {
-  padding: 0 0 4em 0;
+  padding: 0 0 0 0;
   .tournaments--completed {
     padding: 4em 0;
     background: $red;
@@ -13,6 +13,10 @@
     overflow: hidden;
     width: 100%;
   }
+}
+
+#tournament {
+  padding: 0 0 4em 0;
 }
 
 #tournament-players {

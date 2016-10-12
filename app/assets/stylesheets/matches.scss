@@ -7,38 +7,42 @@
 }
 .match {
   margin: 3em 0;
-  .match__players {
-    padding: 0 0 1em 0;
-    margin: 0 0 1em 0;
-    position: relative;
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      height: 3px;
-      width: 20%;
-      left: 40%;
-      background: $red;
-      display: block;
-    }
+}
+
+.match__players {
+  padding: 0 0 1em 0;
+  margin: 0 0 1em 0;
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 3px;
+    width: 20%;
+    left: 40%;
+    background: $red;
+    display: block;
   }
-  .match__results {
-    input[type="submit"] {
-      display: block;
-      float: none;
-      clear: both;
-      margin: 0 auto;
+}
+.match__results {
+  input[type="submit"] {
+    display: block;
+    float: none;
+    clear: both;
+    margin: 0 auto;
+  }
+  h3.winner {
+    margin-bottom: 0.5em;
+  }
+  .score {
+    text-align: center;
+    label {
+      display: inline;
+      margin: 0 1em 0 0;
     }
-    .score {
-      text-align: center;
-      label {
-        display: inline;
-        margin: 0 1em 0 0;
-      }
-      input[type="text"] {
-        display: inline;
-        width: 50px;
-      }
+    input[type="text"] {
+      display: inline;
+      width: 50px;
     }
   }
 }
