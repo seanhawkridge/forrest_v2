@@ -90,7 +90,7 @@ class Tournament < ApplicationRecord
 
   def players_and_byes
     players_and_byes = []
-    players_and_byes << players.sort_by(&:win_percentage)
+    players_and_byes << players.sort_by(&:points)
     players_and_byes << byes_array
     players_and_byes.flatten
   end
