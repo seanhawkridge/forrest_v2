@@ -12,8 +12,8 @@
       <div class="row">
         <div class="small-12 medium-4 medium-centered columns">
           <%= form_for @match do |f| %>
-            <div class="score"><%= f.label :player_one_score %><%= f.text_field :player_one_score %></div>
-            <div class="score"><%= f.label :player_two_score %><%= f.text_field :player_two_score %></div>
+            <div class="score"><%= f.label :player_one_score, "Score for #{@match.player_one.first_name}:" %><%= f.text_field :player_one_score %></div>
+            <div class="score"><%= f.label :player_two_score, "Score for #{@match.player_two.first_name}:" %><%= f.text_field :player_two_score %></div>
             <%= f.submit %>
           <% end %>
         </div>
