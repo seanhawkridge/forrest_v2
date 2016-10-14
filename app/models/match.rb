@@ -27,7 +27,7 @@ class Match < ApplicationRecord
   end
 
   def player_placeholder
-    bye == true ? "bye" : "player"
+    bye == true ? "bye" : "???"
   end
 
   def win_by_bye
