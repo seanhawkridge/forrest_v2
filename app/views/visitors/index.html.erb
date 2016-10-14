@@ -10,6 +10,8 @@
         <h3><%= player.first_name %> <%= player.last_name %></h3>
         <p>Games: <%= player.games %> | Wins: <%= player.wins %></p>
         <p>Win Percentage: <%= number_to_percentage(player.win_percentage, precision: 0) %></p>
+        <p>Points: <%= player.points %></p>
+
       </div>
     <% end %>
   </div>
