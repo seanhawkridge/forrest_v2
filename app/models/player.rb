@@ -7,6 +7,7 @@ class Player < ApplicationRecord
   scope :selected, -> (tournament) { includes(:tournaments).where(tournaments: {id: tournament.id}) }
   scope :not_selected, -> (tournament) { all.order(:first_name) - selected(tournament) }
   scope :by_win_percantage, -> { order(wins: :desc).order(win_percentage: :desc).order(games: :asc) }
+  scope :by_points, -> { order(points: :desc) }
   scope :reverse_alphabetical, -> { all.order(:first_name).reverse_order }
   scope :alphabetical, -> { all.order(:first_name) }
 
@@ -20,7 +21,9 @@ class Player < ApplicationRecord
               'Matador', 'Hawk', 'Bear', 'Wolf', 'Fist', 'Wrist-o']
 
   def update_stats
-    update_attributes(games: update_games_count, win_percentage: calculate_win_percentage)
+    update_attributes(games: update_games_count,
+                      win_percentage: calculate_win_percentage)
+    update_attributes(points: calculate_points)
   end
 
   def update_win_count
@@ -33,6 +36,10 @@ class Player < ApplicationRecord
 
   def calculate_win_percentage
     (wins.to_f/games) * 100
+  end
+
+  def calculate_points
+    wins * win_percentage
   end
 
   def new_nickname
