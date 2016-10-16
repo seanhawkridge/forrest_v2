@@ -2,6 +2,8 @@ class MatchesController < ApplicationController
 
   def new
     @match = Match.new
+    @current_player = current_user.player
+    @players = Player.ladder_challengeable(@current_player)
   end
 
   def create
@@ -34,6 +36,7 @@ class MatchesController < ApplicationController
       @tournament.process_results(@match.round_id)
       redirect_to @tournament
     else
+      @match.update_positions
       redirect_to @match
     end
   end

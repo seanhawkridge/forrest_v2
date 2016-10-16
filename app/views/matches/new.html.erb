@@ -1,15 +1,16 @@
 <div id="match" class="content">
   <div class="row">
     <div class="small-12 medium-6 medium-centered columns">
-      <h1>New Match</h1>
+      <h1>New Challenge!</h1>
     </div>
   </div>
   <div class="row">
     <div class="small-12 medium-6 medium-centered columns">
       <%= form_tag matches_path, method: :post do %>
-        <%= select_tag :player_one, options_from_collection_for_select(Player.alphabetical, :id, :name) %>
+        <h4>You <%= "(current position: #{current_user.player.position})" %></h4>
         <p>vs.</p>
-        <%= select_tag :player_two, options_from_collection_for_select(Player.reverse_alphabetical, :id, :name) %>
+        <%= hidden_field_tag :player_one, current_user.player.id %>
+        <%= select_tag :player_two, options_for_select(@players.map { |player| ["#{player.name} (position: #{player.position})", player.id] } ) %>
         <%= submit_tag "Create Match" %>
       <% end %>
     </div>

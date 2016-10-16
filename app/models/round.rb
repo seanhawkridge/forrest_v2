@@ -23,6 +23,14 @@ class Round < ApplicationRecord
     is_final? ? matches.first.winner : nil
   end
 
+  def stage
+    is_final? ? "round #{number.to_s}" : "the final"
+  end
+
+  def tournament_name
+    tournament.name
+  end
+
   def update_byes
     matches.each { |match| match.win_by_bye if match.bye == true }
   end

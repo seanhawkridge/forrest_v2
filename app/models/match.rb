@@ -1,4 +1,5 @@
 require 'slack-notifier'
+require 'active_support/core_ext/integer/inflections'
 
 class Match < ApplicationRecord
 
@@ -20,10 +21,22 @@ class Match < ApplicationRecord
                        'time to retire the paddle, friend.']
 
   def update_results p1_score, p2_score
-    results = calculate_results p1_score, p2_score
-    update_stats results
-    update_attributes(winner: results[:winner], player_one_score: p1_score, player_two_score: p2_score)
-    notify_slack results
+    @results = calculate_results p1_score, p2_score
+    update_stats @results
+    update_attributes(winner: @results[:winner], player_one_score: p1_score, player_two_score: p2_score)
+    if self.round
+      notify_slack tournament_slack_message @results
+    end
+  end
+
+  def update_positions
+    if @results[:winner].position > @results[:loser].position
+      up_position = @results[:loser].position
+      down_position = @results[:winner].position
+      @results[:winner].update_position(up_position)
+      @results[:loser].update_position(down_position)
+      notify_slack ladder_slack_message @results
+    end
   end
 
   def player_placeholder
@@ -54,6 +67,14 @@ class Match < ApplicationRecord
     end
   end
 
+  def stage
+    round.stage
+  end
+
+  def tournament_name
+    round.tournament_name
+  end
+
   private
 
   def calculate_results p1_score, p2_score
@@ -70,17 +91,25 @@ class Match < ApplicationRecord
     results[:loser].update_stats
   end
 
-  def notify_slack results
+  def notify_slack message
     notifier = Slack::Notifier.new ENV["WEBHOOK_URL"]
-    message = slack_message results
     notifier.ping message
   end
 
-  def slack_message results
+  def tournament_slack_message results
     ":table_tennis_paddle_and_ball: " +
-    "#{results[:winner].name_with_nickname} just beat #{results[:loser].name_with_nickname}. " +
-    "The score was #{results[:winning_score]} : #{results[:losing_score]}. " +
-    "Go #{results[:winner].first_name}! " +
+    "#{results[:winner].name_with_nickname} just beat #{results[:loser].name_with_nickname} in the #{tournament_name} tournament.\n" +
+    "The score was #{@results[:winning_score]} : #{results[:losing_score]}.\n" +
+    "#{results[:winner].first_name} moves into #{stage}\n" +
+    "#{results[:loser].last_name} - #{insult_loser(results[:winning_score], results[:losing_score])}"
+  end
+
+  def ladder_slack_message results
+    ":table_tennis_paddle_and_ball: " +
+    "#{results[:winner].name_with_nickname} just beat #{results[:loser].name_with_nickname}.\n" +
+    "The score was #{results[:winning_score]} : #{results[:losing_score]}.\n" +
+    "#{results[:winner].name} moves up to #{results[:winner].position.ordinalize} place!\n" +
+    "#{results[:loser].name} slips down to #{results[:loser].position.ordinalize}...\n" +
     "#{results[:loser].last_name} - #{insult_loser(results[:winning_score], results[:losing_score])}"
   end
 

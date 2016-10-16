@@ -5,13 +5,14 @@
   <h2>Current Leaders</h2>
   <div class="row">
     <% @players.each do |player| %>
-      <div class="player small-12 medium-3 end columns">
-        <div class="image-container"><%= image_tag player.user.image %></div>
-        <h3><%= player.first_name %> <%= player.last_name %></h3>
-        <p>Games: <%= player.games %> | Wins: <%= player.wins %></p>
-        <p>Win Percentage: <%= number_to_percentage(player.win_percentage, precision: 0) %></p>
-        <p>Points: <%= player.points %></p>
-
+      <div class="small-12 medium-3 end columns">
+        <div class="player">
+          <div class="image-container"><%= image_tag player.user.image %></div>
+          <h3><%= player.first_name %> <%= player.last_name %></h3>
+          <p>Games: <%= player.games %> | Wins: <%= player.wins %></p>
+          <p>Win Percentage: <%= number_to_percentage(player.win_percentage, precision: 0) %></p>
+          <p>Position: <%= player.position %></p>
+        </div>
       </div>
     <% end %>
   </div>

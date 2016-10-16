@@ -1,26 +1,26 @@
 <div id="players" class="content">
-  <h1>Leaderboard</h1>
-  <div class="row">
-    <div class="small-10 medium-6 medium-centered columns">
-      <div class="player leader">
-        <div class="image-container"><%= image_tag @leader.user.image %></div>
-        <h3>Current Leader by matches</h3>
-        <h2><%= @leader.first_name %> <%= @leader.last_name %></h2>
-        <h4>Games: <%= @leader.games %> | Wins: <%= @leader.wins %></h4>
-        <h4>Win Percentage: <%= number_to_percentage(@leader.win_percentage, precision: 0) %></h4>
-        <h4>Points: <%= @leader.points %></h4>
+<h1>The Ladder of Glory</h1>
+  <% @players.each do |player| %>
+    <div class="row">
+      <div class="player">
+        <div class="small-12 medium-6 columns">
+          <div class="player--image">
+            <div class="image-container">
+              <%= image_tag player.user.image %>
+            </div>
+          </div>
+        </div>
+        <div class="small-12 medium-6 columns">
+          <div class="player--content">
+            <h3><%= "#{player.position}: #{player.name}" %></h3>
+            <p>Games: <%= player.games %> | Wins: <%= player.wins %></p>
+            <p>Win Percentage: <%= number_to_percentage(player.win_percentage, precision: 0) %></p>
+            <% if @challengeable.include? player %>
+              <%= link_to "Challenge!", matches_path(player_one: @current_player, player_two: player), method: :post, class: "button" %>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <% @players.drop(1).each.with_index do |player, index| %>
-      <div class="player small-10 medium-4 end columns">
-        <div class="image-container"><%= image_tag player.user.image %></div>
-        <h3><%= "#{index+2}: #{player.name}" %></h3>
-        <p>Games: <%= player.games %> | Wins: <%= player.wins %></p>
-        <p>Win Percentage: <%= number_to_percentage(player.win_percentage, precision: 0) %></p>
-        <p>Points: <%= player.points %></p>
-      </div>
-    <% end %>
-  </div>
+  <% end %>
 </div>

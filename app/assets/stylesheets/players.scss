@@ -5,17 +5,32 @@
 #players {
   padding: 0 0 4em 0;
   .player {
-    text-align: center;
     margin: 2em 0;
+    position: relative;
+    display: block;
+    float: left;
+    width: 100%;
+    padding: 0 0 3em 0;
+    .player--image {
+      width: 100%;
+      text-align: right;
+      display: block;
+      margin: 0 1em 0 0;
+    }
     .image-container {
-      display: inline-block;
       height: 100px;
       width: 100px;
       border-radius: 100%;
+      display: inline-block;
       overflow: hidden;
       background-image: image-url("frst.gif") no-repeat center center;
       background-size: cover;
-      margin-bottom: 0.5em;
+      margin: 0 0 0 0;
+    }
+    .player--content {
+      width: 100%;
+      text-align: left;
+      display: block;
     }
     h2 {
       color: $red;
@@ -31,6 +46,16 @@
         height: 150px;
         width: 150px;
       }
+    }
+    &:after {
+      content: "";
+      height: 3px;
+      width: 10%;
+      position: absolute;
+      bottom: 0;
+      left: 45%;
+      background: $red;
+      display: block;
     }
   }
 }

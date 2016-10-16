@@ -7,7 +7,8 @@
   <div class="match__results">
     <% if @match.winner %>
       <h3 class="winner">Winner: <%= @match.winner.name %></h3>
-      <%= link_to "Play again!", matches_path(player_one: @match.player_one, player_two: @match.player_two), method: :post, class: "button" %>
+      <p><%= "#{@match.winner.first_name} climbs up to #{@match.winner.position.ordinalize}" %></p>
+      <p><%= "#{@match.loser.first_name} slides down to #{@match.loser.position.ordinalize}" %></p>
     <% else %>
       <div class="row">
         <div class="small-12 medium-4 medium-centered columns">

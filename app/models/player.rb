@@ -10,6 +10,8 @@ class Player < ApplicationRecord
   scope :by_points, -> { order(points: :desc) }
   scope :reverse_alphabetical, -> { all.order(:first_name).reverse_order }
   scope :alphabetical, -> { all.order(:first_name) }
+  scope :position, -> { all.order(:position) }
+  scope :ladder_challengeable, -> (current_player) { where( "position < ? AND position >= ?", current_player.position, (current_player.position - 2) ) }
 
   NICKNAMES = ['Pocket Rocket', 'Spin Drier', 'Legend', 'Boss', 'Big Man',
               'Delicate Touch', 'Sunday Driver', 'Shrimper', 'Swerver',
@@ -32,6 +34,10 @@ class Player < ApplicationRecord
 
   def update_games_count
     self.games += 1
+  end
+
+  def update_position(new_position)
+    update_attributes(position: new_position)
   end
 
   def calculate_win_percentage

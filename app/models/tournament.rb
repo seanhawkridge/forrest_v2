@@ -21,18 +21,22 @@ class Tournament < ApplicationRecord
     first_round_matches = pairings.map do |pairing|
       first_round.create_match(pairing[0], pairing[1])
     end
+    first_round.number = 1
     first_round.save
     rounds << first_round
   end
 
   def create_remaining_rounds
     count = rounds.first.matches.size
+    round_number = 2
     while count >= 2
       count /= 2
       next_round = rounds.create
       count.times { next_round.matches << next_round.matches.create }
+      next_round.number = round_number
       next_round.save
       rounds << next_round
+      round_number += 1
     end
   end
 
