@@ -1,0 +1,25 @@
+<div class="row">
+  <% slice.each do |match| %>
+    <div class="small-12 medium-6 columns">
+      <div class="match">
+        <div class="match__players">
+          <h4><%= match.player_one ? match.player_one.name_with_nickname : match.player_placeholder %></h4>
+          <%== "<h4>vs.</h4>" unless match.player_placeholder == "bye" %>
+          <h4><%= match.player_two ? match.player_two.name_with_nickname : match.player_placeholder %></h4>
+        </div>
+        <div class="match__results">
+          <% if match.winner %>
+            <h4>Winner: <%= match.winner.name %></h4>
+          <% elsif (match.ready_to_play?) %>
+            <%= form_for match do |f| %>
+              <div class="score"><%= f.label :player_one_score, "Score for #{match.player_one.first_name}:" %><%= f.text_field :player_one_score %></div>
+              <div class="score"><%= f.label :player_two_score, "Score for #{match.player_two.first_name}:" %><%= f.text_field :player_two_score %></div>
+              <%= f.hidden_field :tournament_id, value: @tournament.id %>
+              <%= f.submit %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,109 +1,133 @@
 <div id="tournament">
+
   <div class="row">
     <div class="small-12 medium-8 medium-centered columns">
       <h1><%= @tournament.name %></h1>
     </div>
   </div>
 
-<% if @tournament.rounds.empty? %>
-  <div class="row">
-    <div class="small-12 medium-4 medium-centered columns">
-      <p>Players:</p>
-      <ul class="players-list">
-        <% @tournament.players.map do |player| %>
-          <li><%= player.name %></li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
+  <% if @tournament.rounds.empty? %>
 
-  <div class="row">
-    <div class="small-12 medium-6 medium-centered columns">
-      <%= form_for @tournament, html: {id: "tournament_players"} do |f| %>
-          <%= f.collection_select(:players, Player.not_selected(@tournament), :id, :name) %>
-          <%= f.submit "Add to tournament" %>
-      <% end %>
-    </div>
-  </div>
+    <div id="tournament-setup">
 
-  <div class="row">
-    <div class="small-12 medium-6 medium-centered columns">
-      <%= button_to "Generate Matches", {action: :build_tournament}, {id: "generate_matches"} %>
-    </div>
-  </div>
-
-</div>
-
-<% else %>
-
-  <div id="tournament-bracket">
-    <% @tournament.rounds.each.with_index do |round, i| %>
-      <div id="<%= "round-#{i+1}" %>">
-        <% if round.is_final? %>
-          <div class="row">
-            <h1>Final!</h1>
-            <% round.matches.each do |match| %>
-              <div class="match">
-                <div class="match__players">
-                  <h4><%= match.player_one ? match.player_one.name_with_nickname : match.player_placeholder %></h4>
-                  <%== "<h4>vs.</h4>" unless match.player_placeholder == "bye" %>
-                  <h4><%= match.player_two ? match.player_two.name_with_nickname : match.player_placeholder %></h4>
-                </div>
-                <div class="match__results">
-                  <% if match.winner %>
-                    <h4>Winner: <%= match.winner.name %></h4>
-                  <% elsif (match.ready_to_play?) && (match.includes_player? current_user.player.id) %>
-                    <%= form_for match do |f| %>
-                      <div class="score"><%= f.label :player_one_score, "Score for #{match.player_one.name}:" %><%= f.text_field :player_one_score %></div>
-                      <div class="score"><%= f.label :player_two_score, "Score for #{match.player_two.name}:" %><%= f.text_field :player_two_score %></div>
-                      <%= f.hidden_field :tournament_id, value: @tournament.id %>
-                      <%= f.submit %>
-                    <% end %>
-                  <% end %>
-                </div>
-              </div>
+      <div class="row">
+        <div class="small-12 medium-4 medium-centered columns">
+          <p>Players:</p>
+          <ul class="players-list">
+            <% @tournament.players.map do |player| %>
+              <li><%= player.name %></li>
             <% end %>
-          </div>
-        <% else %>
-          <h1><%= "Round #{i+1}" %></h1>
-          <% round.matches.order_by_id.each_slice(2) do |slice| %>
-            <div class="row">
-              <% slice.each do |match| %>
-                <div class="small-12 medium-6 columns">
-                  <div class="match">
-                    <div class="match__players">
-                      <h4><%= match.player_one ? match.player_one.name_with_nickname : match.player_placeholder %></h4>
-                      <%== "<h4>vs.</h4>" unless match.player_placeholder == "bye" %>
-                      <h4><%= match.player_two ? match.player_two.name_with_nickname : match.player_placeholder %></h4>
-                    </div>
-                    <div class="match__results">
-                      <% if match.winner %>
-                        <h4>Winner: <%= match.winner.name %></h4>
-                      <% elsif (match.ready_to_play?) && (match.includes_player? current_user.player.id) %>
-                        <%= form_for match do |f| %>
-                          <div class="score"><%= f.label :player_one_score, "Score for #{match.player_one.first_name}:" %><%= f.text_field :player_one_score %></div>
-                          <div class="score"><%= f.label :player_two_score, "Score for #{match.player_two.first_name}:" %><%= f.text_field :player_two_score %></div>
-                          <%= f.hidden_field :tournament_id, value: @tournament.id %>
-                          <%= f.submit %>
-                        <% end %>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-            </div>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="small-12 medium-6 medium-centered columns">
+          <%= form_for @tournament, html: {id: "tournament_players"} do |f| %>
+            <%= f.collection_select(:players, Player.not_selected(@tournament), :id, :name) %>
+            <%= f.submit "Add to tournament" %>
           <% end %>
         </div>
-      <% end %>
+      </div>
+
+      <div class="row">
+        <div class="small-12 medium-6 medium-centered columns">
+          <%= button_to "Generate Matches", {action: :build_tournament}, {id: "generate_matches"} %>
+        </div>
+      </div>
+
     </div>
 
-  <% if @tournament.champion %>
-    <h1>Champion: <%= @tournament.champion.name_with_nickname %></h1>
-    <div id="champion">
-      <div class="content">
-        <h1><%= @tournament.champion.name_with_nickname %> is the Champion!</h1>
+  <% else %>
+
+    <div id="tournament-bracket">
+
+      <% @tournament.rounds.each.with_index do |round, i| %>
+        <div id="<%="round-#{i+1}"%>">
+
+          <% if round.is_final? %>
+
+            <div class="row">
+              <h1>Final!</h1>
+
+              <% round.matches.each do |match| %>
+
+                <div class="match">
+
+                  <div class="match__players">
+                    <h4><%= match.player_one ? match.player_one.name_with_nickname : match.player_placeholder %></h4>
+                    <%== "<h4>vs.</h4>" unless match.player_placeholder == "bye" %>
+                    <h4><%= match.player_two ? match.player_two.name_with_nickname : match.player_placeholder %></h4>
+                  </div>
+
+                  <div class="match__results">
+                    <% if match.winner %>
+                      <h4>Winner: <%= match.winner.name %></h4>
+                    <% elsif (match.ready_to_play?) && (match.includes_player? current_user.player.id) %>
+                      <%= form_for match do |f| %>
+                        <div class="score"><%= f.label :player_one_score, "Score for #{match.player_one.name}:" %><%= f.text_field :player_one_score %></div>
+                        <div class="score"><%= f.label :player_two_score, "Score for #{match.player_two.name}:" %><%= f.text_field :player_two_score %></div>
+                        <%= f.hidden_field :tournament_id, value: @tournament.id %>
+                        <%= f.submit %>
+                      <% end %>
+                    <% end %>
+                  </div>
+
+                </div>
+
+              <% end %>
+
+            </div>
+
+          <% else %>
+
+            <h1><%= "Round #{i+1}" %></h1>
+
+            <% round.matches.order_by_id.each_slice(2) do |slice| %>
+              <div class="row">
+
+                <% slice.each do |match| %>
+                  <div class="small-12 medium-6 columns">
+                    <div class="match">
+
+                      <div class="match__players">
+                        <h4><%= match.player_one ? match.player_one.name_with_nickname : match.player_placeholder %></h4>
+                        <%== "<h4>vs.</h4>" unless match.player_placeholder == "bye" %>
+                        <h4><%= match.player_two ? match.player_two.name_with_nickname : match.player_placeholder %></h4>
+                      </div>
+
+                      <div class="match__results">
+                        <% if match.winner %>
+                          <h4>Winner: <%= match.winner.name %></h4>
+                        <% elsif (match.ready_to_play?) %>
+                          <%= form_for match do |f| %>
+                            <div class="score"><%= f.label :player_one_score, "Score for #{match.player_one.first_name}:" %><%= f.text_field :player_one_score %></div>
+                            <div class="score"><%= f.label :player_two_score, "Score for #{match.player_two.first_name}:" %><%= f.text_field :player_two_score %></div>
+                            <%= f.hidden_field :tournament_id, value: @tournament.id %>
+                            <%= f.submit %>
+                          <% end %>
+                        <% end %>
+                      </div>
+
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+
+            <% end %>
+          </div>
+        <% end %>
       </div>
-    </div>
+    <% end %>
   <% end %>
 
-<% end %><% end %>
+    <% if @tournament.champion %>
+      <h1>Champion: <%= @tournament.champion.name_with_nickname %></h1>
+      <div id="champion">
+        <div class="content">
+          <h1><%= @tournament.champion.name_with_nickname %> is the Champion!</h1>
+        </div>
+      </div>
+    <% end %>
+
+</div>

@@ -1,6 +1,5 @@
-
-$(document).ready(function() {
-  $("#champion").click(function(e) {
+jQuery(function($) {
+  $("div#champion").click(function() {
     console.log('clicked');
     $(this).fadeOut(500);
   });

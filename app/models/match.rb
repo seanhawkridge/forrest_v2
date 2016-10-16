@@ -54,18 +54,6 @@ class Match < ApplicationRecord
     end
   end
 
-  def loser
-    player_one == winner ? player_two : player_one
-  end
-
-  def scores
-    if player_one == winner
-      { winning_score: player_one_score, losing_score: player_two_score }
-    else
-      { winning_score: player_two_score, losing_score: player_one_score }
-    end
-  end
-
   private
 
   def calculate_results p1_score, p2_score
