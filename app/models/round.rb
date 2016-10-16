@@ -24,7 +24,7 @@ class Round < ApplicationRecord
   end
 
   def stage
-    is_final? ? "round #{number.to_s}" : "the final"
+    matches.size > 2 ? "round #{(number + 1).to_s}" : "the final"
   end
 
   def tournament_name

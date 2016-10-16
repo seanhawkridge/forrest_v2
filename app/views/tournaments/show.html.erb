@@ -99,7 +99,7 @@
                       <div class="match__results">
                         <% if match.winner %>
                           <h4>Winner: <%= match.winner.name %></h4>
-                        <% elsif (match.ready_to_play?) %>
+                        <% elsif (match.ready_to_play?) && (match.includes_player? current_user.player.id) %>
                           <%= form_for match do |f| %>
                             <div class="score"><%= f.label :player_one_score, "Score for #{match.player_one.first_name}:" %><%= f.text_field :player_one_score %></div>
                             <div class="score"><%= f.label :player_two_score, "Score for #{match.player_two.first_name}:" %><%= f.text_field :player_two_score %></div>

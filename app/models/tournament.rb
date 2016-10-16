@@ -62,8 +62,6 @@ class Tournament < ApplicationRecord
 
   def update_next_round(round)
     pairings = create_pairings(round.collect_winners)
-    binding.pry
-    p ""
     next_round = rounds.find(round.id+1)
     next_round.matches.order_by_id.each.with_index do |match, i|
       match.update_attributes(player_one: pairings[i][0], player_two: pairings[i][1])
