@@ -31,12 +31,18 @@ class Match < ApplicationRecord
 
   def update_positions
     if @results[:winner].position > @results[:loser].position
-      up_position = @results[:loser].position
-      down_position = @results[:winner].position
-      @results[:winner].update_position(up_position)
-      @results[:loser].update_position(down_position)
-      notify_slack ladder_slack_message @results
+      update_attributes(successful_challenge: true)
+      switch_positions
     end
+    notify_slack challenge_slack_message @results
+  end
+
+  def winner_position_action
+    successful_challenge == true ? "climbs up to" : "stays at"
+  end
+
+  def loser_position_action
+    successful_challenge == true ? "slips down to" : "is stuck at"
   end
 
   def player_placeholder
@@ -77,6 +83,13 @@ class Match < ApplicationRecord
 
   private
 
+  def switch_positions
+    up_position = @results[:loser].position
+    down_position = @results[:winner].position
+    @results[:winner].update_position(up_position)
+    @results[:loser].update_position(down_position)
+  end
+
   def calculate_results p1_score, p2_score
     if p1_score.to_i > p2_score.to_i
       {winner: player_one, loser: player_two, winning_score: p1_score, losing_score: p2_score}
@@ -97,19 +110,25 @@ class Match < ApplicationRecord
   end
 
   def tournament_slack_message results
-    ":table_tennis_paddle_and_ball: " +
-    "#{results[:winner].name_with_nickname} just beat #{results[:loser].name_with_nickname} in the #{tournament_name} tournament.\n" +
-    "The score was #{@results[:winning_score]} : #{results[:losing_score]}.\n" +
+    "#{slack_intro results}" +
     "#{results[:winner].first_name} moves into #{stage}\n" +
-    "#{results[:loser].last_name} - #{insult_loser(results[:winning_score], results[:losing_score])}"
+    "#{slack_insult results}"
   end
 
-  def ladder_slack_message results
+  def challenge_slack_message results
+    "#{slack_intro results}" +
+    "#{results[:winner].name} #{winner_position_action} #{results[:winner].position.ordinalize} place!\n" +
+    "#{results[:loser].name} #{loser_position_action} #{results[:loser].position.ordinalize}...\n" +
+    "#{slack_insult results}"
+  end
+
+  def slack_intro results
     ":table_tennis_paddle_and_ball: " +
     "#{results[:winner].name_with_nickname} just beat #{results[:loser].name_with_nickname}.\n" +
-    "The score was #{results[:winning_score]} : #{results[:losing_score]}.\n" +
-    "#{results[:winner].name} moves up to #{results[:winner].position.ordinalize} place!\n" +
-    "#{results[:loser].name} slips down to #{results[:loser].position.ordinalize}...\n" +
+    "The score was #{results[:winning_score]} : #{results[:losing_score]}.\n"
+  end
+
+  def slack_insult results
     "#{results[:loser].last_name} - #{insult_loser(results[:winning_score], results[:losing_score])}"
   end
 

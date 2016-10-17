@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Forrest" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Forrest" %>">
+    <%= favicon_link_tag %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= stylesheet_link_tag 'application', 'https://fonts.googleapis.com/css?family=Oswald:300,400|Raleway' %>
     <%# Modernizr is required for Zurb Foundation %>

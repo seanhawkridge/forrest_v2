@@ -10,21 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161016175411) do
+ActiveRecord::Schema.define(version: 20161017122832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "games", force: :cascade do |t|
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "round_id"
+    t.integer  "player_one_id"
+    t.integer  "player_two_id"
+    t.integer  "winner_id"
+    t.boolean  "bye",           default: false
+    t.index ["round_id"], name: "index_games_on_round_id", using: :btree
+  end
+
   create_table "matches", force: :cascade do |t|
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.integer  "round_id"
     t.integer  "player_one_id"
     t.integer  "player_two_id"
     t.integer  "player_one_score"
     t.integer  "player_two_score"
     t.integer  "winner_id"
-    t.boolean  "bye",              default: false
+    t.boolean  "bye",                  default: false
+    t.boolean  "successful_challenge", default: false
     t.index ["round_id"], name: "index_matches_on_round_id", using: :btree
   end
 
@@ -76,6 +88,7 @@ ActiveRecord::Schema.define(version: 20161016175411) do
     t.string   "last_name"
   end
 
+  add_foreign_key "games", "rounds"
   add_foreign_key "matches", "rounds"
   add_foreign_key "rounds", "tournaments"
 end
