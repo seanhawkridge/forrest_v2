@@ -15,7 +15,7 @@
             <h3><%= "#{player.position}: #{player.name}" %></h3>
             <p>Games: <%= player.games %> | Wins: <%= player.wins %></p>
             <p>Win Percentage: <%= number_to_percentage(player.win_percentage, precision: 0) %></p>
-            <% if @challengeable.include? player %>
+            <% if current_user && (@challengeable.include? player) %>
               <%= link_to "Challenge!", matches_path(player_one: @current_player, player_two: player), method: :post, class: "button" %>
             <% end %>
           </div>
