@@ -11,9 +11,9 @@ class Match < ApplicationRecord
   scope :with_results, -> { where.not(winner: nil).where(bye: false).order(updated_at: :desc) }
 
   def update_results p1_score, p2_score
-    update winner: calculate_winner(p1_score, p2_score)
+    update winner: calculate_winner(p1_score, p2_score),
+           player_one_score: p1_score, player_two_score: p2_score
     update_stats
-    update winner: winner, player_one_score: p1_score, player_two_score: p2_score
   end
 
   def update_positions
