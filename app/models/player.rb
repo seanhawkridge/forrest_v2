@@ -23,9 +23,8 @@ class Player < ApplicationRecord
               'Matador', 'Hawk', 'Bear', 'Wolf', 'Fist', 'Wrist-o']
 
   def update_stats
-    update_attributes(games: update_games_count,
-                      win_percentage: calculate_win_percentage)
-    update_attributes(points: calculate_points)
+    update games: update_games_count, win_percentage: calculate_win_percentage
+    update points: calculate_points
   end
 
   def update_win_count

@@ -1,3 +1,4 @@
+
 class MatchesController < ApplicationController
 
   def new
@@ -33,10 +34,12 @@ class MatchesController < ApplicationController
     @match.update_results(params[:match][:player_one_score], params[:match][:player_two_score])
     if params[:match][:tournament_id]
       @tournament = Tournament.find(params[:match][:tournament_id])
-      @tournament.process_results(@match.round_id)
+      @tournament.process_results @match.round_id
+      MatchNotifier.tournament_result_notification @match
       redirect_to @tournament
     else
       @match.update_positions
+      MatchNotifier.challenge_result_notification @match
       redirect_to @match
     end
   end
