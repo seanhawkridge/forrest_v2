@@ -1,0 +1,16 @@
+// Place all the styles related to the Challenges controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#challenge {
+  padding-bottom: 4em;
+  h1.name {
+    margin-bottom: 0.25em;
+  }
+  .challenge--rules {
+    margin: 2em 0;
+    ul {
+      list-style: none;
+    }
+  }
+}

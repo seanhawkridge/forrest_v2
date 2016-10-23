@@ -1,0 +1,50 @@
+
+<div id="challenge" class="content">
+  <% if @challenge.status == "open" %>
+    <h1 class="name"><%= @challenge.challenger == current_player ? "You" : @challenge.challenger.name %></h1>
+    <h3><%= @challenge.challenger == current_player ? "have " : "has " %>challenged</h3>
+    <h1 class="name"><%= @challenge.challenged == current_player ? "You" : @challenge.challenged.name %></h1>
+    <div class="row">
+      <div class="small-12 medium-8 medium-centered columns">
+        <div class="challenge--rules">
+          <p>The Rules:</p>
+          <ul>
+            <li>If <%= @challenge.challenger.first_name %> wins, they take
+                the place of <%= @challenge.challenged.first_name %> on the ladder.</li>
+            <% if @challenge.challenger.places_below @challenge.challenged, 2 %>
+              <li>If <%= @challenge.challenged.first_name %>
+                  wins, <%= @challenge.challenger.first_name %> automatically moves down
+                  an extra place for being a n00b.</li>
+            <% end %>
+            <li>If the challenge is refused, <%= @challenge.challenged.first_name %> automatically loses their place
+                on the ladder.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-12 medium-8 medium-centered columns">
+        <% if current_player %>
+          <%= link_to "Accept challenge!", matches_path(player_one: @challenge.challenger,
+                                                        player_two: @challenge.challenged,
+                                                        match_type: "challenge",
+                                                        challenge: @challenge),
+                                                        method: :post,
+                                                        class: "button" %>
+          <%= link_to "Refuse challenge", challenge_path(@challenge, status: "refused"),
+                                                          method: :put,
+                                                          class: "button" %>
+        <% elsif current_player == @challenge.challenger %>
+          <%= link_to "Abort challenge", challenge_path(@challenge, status: "cancelled"),
+                                                          method: :put,
+                                                          class: "button" %>
+        <% else %>
+          <p>Waiting on a response from <%= @challenge.challenged.name %>
+        <% end %>
+      <% else %>
+        <h3>Sorry, this challenge has been <%= @challenge.status %>.</h3>
+        <%= link_to "Go challenge someone!", players_path, class: "button" %>
+      <% end %>
+    </div>
+  </div>
+</div>

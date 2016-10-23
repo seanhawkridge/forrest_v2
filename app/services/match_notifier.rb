@@ -52,5 +52,4 @@ class MatchNotifier
       THRASHING_RESULT_MESSAGES.sample
     end
   end
-
 end

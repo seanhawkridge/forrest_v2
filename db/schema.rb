@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017122832) do
+ActiveRecord::Schema.define(version: 20161021194344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "challenges", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "match_id"
+    t.integer  "challenger_id"
+    t.integer  "challenged_id"
+    t.string   "status"
+    t.string   "result"
+    t.index ["match_id"], name: "index_challenges_on_match_id", using: :btree
+  end
 
   create_table "games", force: :cascade do |t|
     t.datetime "created_at",                    null: false
@@ -37,6 +48,9 @@ ActiveRecord::Schema.define(version: 20161017122832) do
     t.integer  "winner_id"
     t.boolean  "bye",                  default: false
     t.boolean  "successful_challenge", default: false
+    t.string   "match_type"
+    t.integer  "challenge_id"
+    t.index ["challenge_id"], name: "index_matches_on_challenge_id", using: :btree
     t.index ["round_id"], name: "index_matches_on_round_id", using: :btree
   end
 
@@ -52,6 +66,7 @@ ActiveRecord::Schema.define(version: 20161017122832) do
     t.string   "last_name"
     t.integer  "points"
     t.integer  "position"
+    t.string   "slack_handle"
     t.index ["user_id"], name: "index_players_on_user_id", using: :btree
   end
 
@@ -88,6 +103,7 @@ ActiveRecord::Schema.define(version: 20161017122832) do
     t.string   "last_name"
   end
 
+  add_foreign_key "challenges", "matches"
   add_foreign_key "games", "rounds"
   add_foreign_key "matches", "rounds"
   add_foreign_key "rounds", "tournaments"

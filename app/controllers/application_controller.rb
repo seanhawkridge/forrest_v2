@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :user_signed_in?
   helper_method :correct_user?
+  helper_method :current_player
 
   private
     def current_user
@@ -33,4 +34,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def current_player
+      current_user.player
+    end
 end

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :tournaments
   resources :matches
   resources :players
+  resources :challenges
   root to: 'visitors#index'
   get '/auth/:provider/callback' => 'sessions#create'
   get '/signin' => 'sessions#new', :as => :signin

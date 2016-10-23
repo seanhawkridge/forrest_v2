@@ -2,13 +2,17 @@ require 'active_support/core_ext/integer/inflections'
 
 class Match < ApplicationRecord
 
+  before_create :set_nicknames
+
   belongs_to :player_one, class_name: 'Player', optional: true
   belongs_to :player_two, class_name: 'Player', optional: true
   belongs_to :winner, class_name: 'Player', optional: true
   belongs_to :round, optional: true
+  belongs_to :challenge, optional: true
 
   scope :order_by_id, -> { order(id: :asc) }
   scope :with_results, -> { where.not(winner: nil).where(bye: false).order(updated_at: :desc) }
+  scope :open_challenge, -> (player) {where("winner = ? AND match_type = ? AND (player_one = ? OR player_two = ?)", nil, "challenge", player, player)}
 
   def update_results p1_score, p2_score
     update winner: calculate_winner(p1_score, p2_score),
@@ -17,10 +21,17 @@ class Match < ApplicationRecord
   end
 
   def update_positions
-    if winner.position > loser.position
-      update successful_challenge: true
-      switch_positions
-    end
+    position_gain if winner.position > loser.position
+    demote_challenger if (loser == player_one) && (loser.places_below winner, 2)
+  end
+
+  def position_gain
+    update successful_challenge: true
+    winner.switch_places_with loser
+  end
+
+  def demote_challenger
+    loser.forfeit_place unless loser.is_bottom?
   end
 
   def winner_position_action
@@ -28,7 +39,7 @@ class Match < ApplicationRecord
   end
 
   def loser_position_action
-    successful_challenge == true ? "slips down to" : "is stuck at"
+    (successful_challenge == true) || (loser.places_below winner, 3) ? "slips down to" : "is stuck at"
   end
 
   def player_placeholder
@@ -71,18 +82,24 @@ class Match < ApplicationRecord
     round.tournament_name
   end
 
-  private
-
-  def switch_positions
-    up_position = loser.position
-    down_position = winner.position
-    winner.update_position up_position
-    loser.update_position down_position
+  def is_challenge?
+    match_type == "challenge"
   end
+
+  def is_tournament?
+    match_type == "tournament"
+  end
+
+  private
 
   def update_stats
     winner.update_win_count
     winner.update_stats
     loser.update_stats
   end
+
+  def set_nicknames
+    [player_one, player_two].each { |player| player.new_nickname }
+  end
+
 end
