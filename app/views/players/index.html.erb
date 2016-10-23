@@ -15,10 +15,10 @@
             <h3><%= "#{player.position}: #{player.name}" %></h3>
             <p>Games: <%= player.games %> | Wins: <%= player.wins %></p>
             <p>Win Percentage: <%= number_to_percentage(player.win_percentage, precision: 0) %></p>
-            <% if current_player && (@challengeable.include? player) && (current_player.free_to_challenge?) && (player.free_to_challenge?) %>
+            <% if current_user && (@challengeable.include? player) && (current_player.free_to_challenge?) && (player.free_to_challenge?) %>
               <%= link_to "Challenge!", challenges_path(challenger: @current_player, challenged: player), method: :post, class: "button" %>
             <% end %>
-            <% if (player != current_player) && current_player.has_open_challenge? && (current_player.current_challenge_includes_player? player) %>
+            <% if current_user && (player != current_player) && current_player.has_open_challenge? && (current_player.current_challenge_includes_player? player) %>
               <%= link_to "View Challenge", challenge_path(current_player.current_challenge), method: :get, class: "button" %>
             <% end %>
           </div>
