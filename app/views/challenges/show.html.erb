@@ -24,7 +24,7 @@
     </div>
     <div class="row">
       <div class="small-12 medium-8 medium-centered columns">
-        <% if current_player %>
+        <% if current_player == @challenge.challenged %>
           <%= link_to "Accept challenge!", matches_path(player_one: @challenge.challenger,
                                                         player_two: @challenge.challenged,
                                                         match_type: "challenge",

@@ -1,5 +1,7 @@
 class ChallengesController < ApplicationController
 
+  before_action :authenticate_user!
+
   def new
     @challenge = Challenge.new
   end
