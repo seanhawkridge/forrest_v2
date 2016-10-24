@@ -22,8 +22,12 @@ class MatchesController < ApplicationController
 
   def update
     @match = Match.find(params[:id])
-    @match.update_results(params[:match][:player_one_score], params[:match][:player_two_score])
-    params[:match][:tournament_id] ? update_tournament_match : update_challenge_match
+    if @match.winner
+      redirect_to @match, alert: "A result has already been logged for this match"
+    else
+      @match.update_results(params[:match][:player_one_score], params[:match][:player_two_score])
+      params[:match][:tournament_id] ? update_tournament_match : update_challenge_match
+    end
   end
 
   private
@@ -42,10 +46,11 @@ class MatchesController < ApplicationController
   end
 
   def update_challenge_match
-    @match.update_positions
-    @match.challenge.update status: "complete"
-    MatchNotifier.challenge_result_notification @match
-    redirect_to @match
+      @match.update_positions
+      @match.challenge.update status: "complete"
+      MatchNotifier.challenge_result_notification @match
+      redirect_to @match
+    end
   end
 
   def update_tournament_match
