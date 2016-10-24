@@ -50,7 +50,6 @@ class MatchesController < ApplicationController
       @match.challenge.update status: "complete"
       MatchNotifier.challenge_result_notification @match
       redirect_to @match
-    end
   end
 
   def update_tournament_match

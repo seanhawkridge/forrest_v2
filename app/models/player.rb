@@ -94,6 +94,6 @@ class Player < ApplicationRecord
   end
 
   def slack_name
-    "<#{slack_handle}>" || first_name
+    slack_handle ? "<#{slack_handle}>" : first_name
   end
 end

@@ -9,7 +9,7 @@
       <h3 class="winner">Winner: <%= @match.winner.name %></h3>
       <p><%= "#{@match.winner.first_name} #{@match.winner_position_action} #{@match.winner.position.ordinalize}" %></p>
       <p><%= "#{@match.loser.first_name} #{@match.loser_position_action} #{@match.loser.position.ordinalize}" %></p>
-    <% else %>
+    <% elsif @match.includes_player? current_player.id %>
       <div class="row">
         <div class="small-12 medium-4 medium-centered columns">
           <%= form_for @match do |f| %>
@@ -17,6 +17,12 @@
             <div class="score"><%= f.label :player_two_score, "Score for #{@match.player_two.first_name}:" %><%= f.text_field :player_two_score %></div>
             <%= f.submit %>
           <% end %>
+        </div>
+      </div>
+    <% else %>
+      <div class="row">
+        <div class="small-12 medium-4 medium-centered columns">
+          <p>Match in Progress</p>
         </div>
       </div>
     <% end %>
