@@ -35,8 +35,7 @@ class ChallengesController < ApplicationController
 
   def refused_challenge
     @challenge.update status: "refused"
-    @challenge.position_switch_on_refusal
-    redirect_to players_path, alert: "Challenge refused. Coward."
+    redirect_to players_path, alert: "Challenge refused."
   end
 
   def cancelled_challenge

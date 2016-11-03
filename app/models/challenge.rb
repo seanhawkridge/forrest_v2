@@ -10,9 +10,4 @@ class Challenge < ApplicationRecord
   def open_challenge?
     status == "open"
   end
-
-  def position_switch_on_refusal
-    challenged.switch_places_with challenger
-  end
-
 end

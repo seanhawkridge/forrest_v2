@@ -4,7 +4,7 @@ class ChallengeNotifier
 
   def self.challenge_invitation_notification challenge: challenge, url: url
     message = ":muscle: #{challenge.challenged.slack_name}: #{challenge.challenger.name} has challenged you!\n" +
-              "<#{url}|Click here> to accept (or refuse) the challenge!"
+              "<#{url}|Click here> to accept or refuse the challenge!"
     notify_slack message
   end
 
