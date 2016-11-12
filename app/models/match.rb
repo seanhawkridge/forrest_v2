@@ -90,6 +90,10 @@ class Match < ApplicationRecord
     match_type == "tournament"
   end
 
+  def is_final?
+    round.is_final?
+  end
+
   private
 
   def update_stats
@@ -99,7 +103,7 @@ class Match < ApplicationRecord
   end
 
   def set_nicknames
-    [player_one, player_two].each { |player| player.new_nickname }
+    [player_one, player_two].each { |player| player.try(:new_nickname) }
   end
 
 end

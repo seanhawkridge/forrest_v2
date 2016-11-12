@@ -13,6 +13,7 @@ class TournamentsController < ApplicationController
 
   def show
     @tournament = Tournament.find(params[:id])
+    @rounds = @tournament.rounds.reverse
   end
 
   def update

@@ -12,9 +12,14 @@ class MatchNotifier
                        'time to retire the paddle, friend.']
 
   def self.tournament_result_notification match
-    message = "#{slack_intro match}" +
-              "#{match.winner.first_name} moves into #{match.stage}\n" +
-              "#{slack_insult match}"
+    if match.is_final?
+      message = ":trophy: " +
+                "#{match.winner.name} just won the #{match.tournament_name} tournament! What a legend."
+    else
+      message = "#{slack_intro match}" +
+                "#{match.winner.first_name} moves into #{match.stage}\n" +
+                "#{slack_insult match}"
+    end
     notify_slack message
   end
 
@@ -41,6 +46,17 @@ class MatchNotifier
 
   def self.slack_insult match
     "#{match.loser.last_name} - #{insult_loser(match.winning_score, match.losing_score)}"
+  end
+
+  def self.tournament_win match
+    "#{slack_intro match}" +
+    "#{match.winner.first_name} moves into #{match.stage}\n" +
+    "#{slack_insult match}"
+  end
+
+  def self.final_win match
+    ":trophy: " +
+    "#{match.winner.name} just won the #{match.tournament_name} tournament! What a legend."
   end
 
   def self.insult_loser winning_score, losing_score

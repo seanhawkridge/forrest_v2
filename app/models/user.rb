@@ -17,7 +17,8 @@ class User < ActiveRecord::Base
   end
 
   def create_player
-    @player = Player.create(first_name: self.first_name, last_name: self.last_name, user: self)
+    new_player_position = (Player.count + 1)
+    @player = Player.create(first_name: self.first_name, last_name: self.last_name, user: self, position: new_player_position)
   end
 
 end

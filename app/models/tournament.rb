@@ -47,17 +47,6 @@ class Tournament < ApplicationRecord
 
   def set_champion(round)
     update_attributes(champion: round.final_winner)
-    notify_slack
-  end
-
-  def notify_slack
-    notifier = Slack::Notifier.new ENV["WEBHOOK_URL"]
-    notifier.ping slack_message
-  end
-
-  def slack_message
-    ":trophy: " +
-    "#{champion.name} just won the #{self.name} tournament! What a legend."
   end
 
   def update_next_round(round)
