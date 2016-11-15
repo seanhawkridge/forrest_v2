@@ -10,4 +10,8 @@ class Challenge < ApplicationRecord
   def open_challenge?
     status == "open"
   end
+
+  def opposition_to player
+    [challenger, challenged].reject { |c| c == player }.first
+  end
 end

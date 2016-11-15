@@ -21,6 +21,9 @@
             <% if current_user && (player != current_player) && current_player.has_open_challenge? && (current_player.current_challenge_includes_player? player) %>
               <%= link_to "View Challenge", challenge_path(current_player.current_challenge), method: :get, class: "button" %>
             <% end %>
+            <% if player.has_open_challenge? %>
+              <p>Has a challenge open with <%= player.current_challenge.opposition_to(player).first_name %></p>
+            <% end %>
           </div>
         </div>
       </div>
