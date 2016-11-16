@@ -14,7 +14,7 @@
             <% if @challenge.challenger.places_below @challenge.challenged, 2 %>
               <li>If <%= @challenge.challenged.first_name %>
                   wins, <%= @challenge.challenger.first_name %> automatically moves down
-                  an extra place for being a n00b.</li>
+                  an extra place for pushing their luck.</li>
             <% end %>
             <li>You can refuse the challenge if you're unable to play, to keep the ladder open for other challenges.</li>
           </ul>
@@ -42,7 +42,7 @@
         <% end %>
   <% elsif @challenge.status == 'accepted' %>
     <h3>This challenge has been accepted<h3>
-    <%= link_to "View Match", match_path(@challenge.match_id) %>
+    <%= link_to "View Match", match_path(@challenge.match_id), class: "button" %>
   <% else %>
     <h3>Sorry, this challenge has been <%= @challenge.status %>.</h3>
     <%= link_to "Go challenge someone!", players_path, class: "button" %>
