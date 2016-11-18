@@ -40,9 +40,8 @@
         <% else %>
           <p>Waiting on a response from <%= @challenge.challenged.name %>
         <% end %>
-  <% elsif @challenge.status == 'accepted' %>
-    <h3>This challenge has been accepted<h3>
-    <%= link_to "View Match", match_path(@challenge.match_id), class: "button" %>
+  <% elsif @challenge.status == "accepted" %>
+    <h3>This challenge has been accepted.</h3>
   <% else %>
     <h3>Sorry, this challenge has been <%= @challenge.status %>.</h3>
     <%= link_to "Go challenge someone!", players_path, class: "button" %>
