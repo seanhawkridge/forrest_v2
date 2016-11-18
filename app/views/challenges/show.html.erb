@@ -42,6 +42,7 @@
         <% end %>
   <% elsif @challenge.status == "accepted" %>
     <h3>This challenge has been accepted.</h3>
+    <%= link_to "View match", match_path(@challenge_match), class: "button" %>
   <% else %>
     <h3>Sorry, this challenge has been <%= @challenge.status %>.</h3>
     <%= link_to "Go challenge someone!", players_path, class: "button" %>

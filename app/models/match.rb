@@ -12,6 +12,7 @@ class Match < ApplicationRecord
 
   scope :order_by_id, -> { order(id: :asc) }
   scope :with_results, -> { where.not(winner: nil).where(bye: false).order(updated_at: :desc) }
+  scope :with_challenge, -> (challenge_id) { where(challenge_id: challenge_id )}
   scope :open_challenge, -> (player) {where("winner = ? AND match_type = ? AND (player_one = ? OR player_two = ?)", nil, "challenge", player, player)}
 
   def update_results p1_score, p2_score

@@ -29,6 +29,7 @@ class ChallengesController < ApplicationController
 
   def show
     @challenge = Challenge.find(params[:id])
+    @challenge_match = Match.with_challenge(@challenge.id).first
   end
 
   private
