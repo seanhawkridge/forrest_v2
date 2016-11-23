@@ -104,7 +104,9 @@ class Match < ApplicationRecord
   end
 
   def set_nicknames
-    [player_one, player_two].each { |player| player.try(:new_nickname) }
+    [player_one, player_two].each do |player|
+      player.try(:new_nickname) unless player.last_name == 'Drogo'
+    end
   end
 
 end
